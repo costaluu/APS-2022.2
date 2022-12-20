@@ -14,7 +14,7 @@ O grupo se propõe a modelar uma aplicação de vendas online(E-Commerce) de pro
 ```
 
 ## Diagrama Casos de Uso
-
+![q5sjbpp](https://user-images.githubusercontent.com/31044920/208559376-5719aabb-8050-43e3-8311-bbc36d7e68c4.png)
 ## Fluxos casos de uso
 > - **Descrição**: Esse caso de uso é responsável por autenticar e criar sessões dentro da aplicação.
 > - **Pré-condição**: Estar na tela de login.
