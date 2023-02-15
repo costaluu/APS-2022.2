@@ -164,7 +164,7 @@ O grupo se propõe a modelar uma aplicação de vendas online(E-Commerce) de pro
 3. O sistema espera 24h para a efetuação do pagamento.
 4. O sistema confirma a transação e adiciona o pedido a conta do usuário.
 
-> - **Fluxo secundário**: No passo 4, caso o pagamento não seja confirmado o sistema cancela a operação. O usuário pode cancelar a qualquer momento. No passo 3 caso a requisição para a API falhe uma mensagem de erro é mostrada ao usuário.
+> - **Fluxo secundário**: No passo 3, caso o pagamento não seja confirmado o sistema cancela a operação. O usuário pode cancelar a qualquer momento. No passo 2 caso a requisição para a API falhe, uma mensagem de erro é mostrada ao usuário.
 
 </p>
 </details>
