@@ -13,7 +13,8 @@ Jonathan - jkss
 O grupo se propõe a modelar uma aplicação de vendas online(E-Commerce) de propósito geral. Nessa aplicação, os clientes poderão se registrar e logar sendo usuários, adicionar produtos em seus carrinhos, efetuar a compra dos produtos no carrinho, avaliar os produtos e buscar produtos.
 
 # Diagrama Casos de Uso!
-![diagrama](https://user-images.githubusercontent.com/44981765/219094950-b68c2b5a-03aa-46b6-ab9b-e042b66e70d4.PNG)
+![diagrama](https://user-images.githubusercontent.com/44981765/219095835-7bb1813b-d53c-47bd-a9fb-1a94772329df.PNG)
+
 
 # Fluxos casos de uso
 
