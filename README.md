@@ -9,12 +9,12 @@ Jonathan - jkss
 
 ## Escopo
 
-```
-O grupo se propõe a modelar uma aplicação de vendas online(E-Commerce) de propósito geral. Nessa aplicação, os clientes poderão se registrar e logar sendo usuários, adicionar produtos em seus carrinhos, efetuar a compra dos produtos no carrinho, avaliar os produtos e buscar produtos.
-```
 
-# Diagrama Casos de Uso
-![q5sjbpp](https://user-images.githubusercontent.com/31044920/208559376-5719aabb-8050-43e3-8311-bbc36d7e68c4.png)
+O grupo se propõe a modelar uma aplicação de vendas online(E-Commerce) de propósito geral. Nessa aplicação, os clientes poderão se registrar e logar sendo usuários, adicionar produtos em seus carrinhos, efetuar a compra dos produtos no carrinho, avaliar os produtos e buscar produtos.
+
+# Diagrama Casos de Uso!
+![diagrama](https://user-images.githubusercontent.com/44981765/219094950-b68c2b5a-03aa-46b6-ab9b-e042b66e70d4.PNG)
+
 # Fluxos casos de uso
 
 ## **1. Login**
