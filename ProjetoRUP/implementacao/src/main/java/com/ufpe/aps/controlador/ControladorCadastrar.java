@@ -9,8 +9,10 @@ public class ControladorCadastrar {
     @Autowired
     private IRepositorioConta repositorioConta;
 
-    public void cadastrarConta(String login, String senha) {
+    public void cadastrarConta(String login, String senha) throws Exception {
         if(!repositorioConta.checarExistencia(login))
             repositorioConta.criarConta(login, senha);
+        else
+            throw new Exception("Conta já existente");
     }
 }

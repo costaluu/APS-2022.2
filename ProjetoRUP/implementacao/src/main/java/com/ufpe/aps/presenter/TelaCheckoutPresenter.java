@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
-@RequestMapping("${conta.servlet.path}")
+@RequestMapping("${carrinho.servlet.path}")
 public class TelaCheckoutPresenter {
 
     @Autowired

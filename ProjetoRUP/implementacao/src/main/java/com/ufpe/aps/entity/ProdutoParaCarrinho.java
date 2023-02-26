@@ -11,8 +11,13 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 public class ProdutoParaCarrinho {
-
-    private Integer id;
-
+    private Produto produto;
     private Integer quantidade;
+
+    public static ProdutoParaCarrinho criarProdutoParaPedido(Produto produto, Integer quantidade){
+        ProdutoParaCarrinho produtoParaCarrinho = new ProdutoParaCarrinho();
+        produtoParaCarrinho.setProduto(produto);
+        produtoParaCarrinho.setQuantidade(quantidade);
+        return produtoParaCarrinho;
+    }
 }

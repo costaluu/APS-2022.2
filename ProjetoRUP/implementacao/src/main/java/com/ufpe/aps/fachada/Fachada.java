@@ -2,6 +2,7 @@ package com.ufpe.aps.fachada;
 
 import com.ufpe.aps.controlador.*;
 import com.ufpe.aps.entity.Produto;
+import com.ufpe.aps.pojo.AddProdutoCarrinhoDTO;
 import com.ufpe.aps.pojo.PagamentoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -30,8 +31,8 @@ public class Fachada {
         controladorPublicarItem.publicarItem(itemDTO);
     }
 
-    public void addProdutoCarrinho(Produto produtoDTO) {
-
+    public void addProdutoCarrinho(AddProdutoCarrinhoDTO produtoDTO) throws Exception {
+        controladorAddProdutoCarrinho.addProdutoCarrinho(produtoDTO.getLogin(), produtoDTO.getIdProduto(), produtoDTO.getQuantidade());
     }
 
     public boolean efetuarLogin(String login, String senha) {
@@ -42,7 +43,7 @@ public class Fachada {
         controladorCheckout.realizarPagamento(pagamentoDTO);
     }
 
-    public void cadastrarConta(String login, String senha) {
+    public void cadastrarConta(String login, String senha) throws Exception {
         controladorCadastrar.cadastrarConta(login, senha);
     }
 }
