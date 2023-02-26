@@ -1,4 +1,4 @@
-package com.ufpe.aps.repository.IRepository;
+package com.ufpe.aps.repository.interfaces;
 
 import com.ufpe.aps.entity.Produto;
 

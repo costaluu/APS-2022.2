@@ -1,22 +1,21 @@
 package com.ufpe.aps.entity;
 
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name = "pedido")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Pedido {
+
+    private Integer idPedido;
+
     private Double valorDaCompra;
 
     private String loginCliente;
-
-    @Id
-    private Integer idPedido;
 
     private String statusPedido;
 }

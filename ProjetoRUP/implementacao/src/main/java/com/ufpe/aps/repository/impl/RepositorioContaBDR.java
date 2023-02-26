@@ -1,32 +1,27 @@
 package com.ufpe.aps.repository.impl;
 
+import com.ufpe.aps.entity.Carrinho;
 import com.ufpe.aps.entity.Conta;
-import com.ufpe.aps.repository.db.RepositoryContaBDR;
-import com.ufpe.aps.repository.IRepository.IRepositorioConta;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ufpe.aps.repository.interfaces.IRepositorioConta;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Component
 public class RepositorioContaBDR implements IRepositorioConta {
 
-    @Autowired
-    RepositoryContaBDR repositoryContaBDR;
+    private List<Conta> contas;
 
-    public RepositorioContaBDR(){
-        System.out.println("RepositorioContaBDR criado");
+    public RepositorioContaBDR() {
+        contas = new ArrayList<>();
     }
 
     @Override
-    public List<Conta> pegarTodasContas() {
-        return (List<Conta>) repositoryContaBDR.findAll();
-    }
-
-    @Override
-    public Optional<Conta> checarExistencia(String login) {
-        return repositoryContaBDR.findById(login);
+    public boolean checarExistencia(String login) {
+        Optional<Conta> conta = contas.stream().filter(c -> c.getLogin().equals(login)).findFirst();
+        return conta.isPresent();
     }
 
     @Override
@@ -34,11 +29,17 @@ public class RepositorioContaBDR implements IRepositorioConta {
         Conta conta = new Conta();
         conta.setLogin(login);
         conta.setSenha(senha);
-        repositoryContaBDR.save(conta);
+        contas.add(conta);
     }
 
     @Override
     public Conta pegarConta(String login) {
-        return null;
+        Optional<Conta> conta = contas.stream().filter(c -> c.getLogin().equals(login)).findFirst();
+        return conta.orElse(null);
+    }
+
+    @Override
+    public void atualizarCarrinho(String login, Carrinho carrinho) {
+
     }
 }

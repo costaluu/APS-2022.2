@@ -1,9 +1,9 @@
 package com.ufpe.aps.factory.impl;
 
 import com.ufpe.aps.factory.FabricaAbstrataRepositorios;
-import com.ufpe.aps.repository.IRepository.IRepositorioConta;
-import com.ufpe.aps.repository.IRepository.IRepositorioPedido;
-import com.ufpe.aps.repository.IRepository.IRepositorioProduto;
+import com.ufpe.aps.repository.interfaces.IRepositorioConta;
+import com.ufpe.aps.repository.interfaces.IRepositorioPedido;
+import com.ufpe.aps.repository.interfaces.IRepositorioProduto;
 
 public class FabricaRepositorioMongo implements FabricaAbstrataRepositorios {
     @Override

@@ -1,26 +1,31 @@
 package com.ufpe.aps.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name="produto")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Produto {
-    @Id
+    @JsonProperty(required = true)
     private String id;
 
+    @JsonProperty(required = true)
     private String dono;
 
+    @JsonProperty(required = true)
     private String nome;
 
+    @JsonProperty(required = true)
     private String descricao;
 
+    @JsonProperty(required = true)
     private Integer totalUnidades;
 
+    @JsonProperty(required = true)
     private Double valor;
 }

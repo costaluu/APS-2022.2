@@ -1,4 +1,4 @@
-package com.ufpe.aps.controller;
+package com.ufpe.aps.presenter;
 
 import com.ufpe.aps.entity.Conta;
 import com.ufpe.aps.fachada.Fachada;
@@ -10,21 +10,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin
 @RequestMapping("${conta.servlet.path}")
-public class ContaController {
+public class TelaDeLoginPresenter {
     @Autowired
     Fachada fachada;
-
-    @PostMapping("/cadastrar")
-    public ResponseEntity cadastrarConta(@RequestBody Conta conta) {
-        if(conta != null) {
-            if (conta.getLogin() == null || conta.getSenha() == null)
-                return ResponseEntity.badRequest().build();
-
-            fachada.cadastrarConta(conta.getLogin(), conta.getSenha());
-            return ResponseEntity.ok().build();
-        }
-        return ResponseEntity.badRequest().build();
-    }
 
     @PostMapping("/login")
     public ResponseEntity efetuarLogin(@RequestBody Conta conta) {
