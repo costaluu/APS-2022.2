@@ -10,10 +10,11 @@ Jonathan - jkss
 ## Escopo
 
 
-O grupo se propõe a modelar uma aplicação de vendas online(E-Commerce) de propósito geral. Nessa aplicação, os clientes poderão se registrar e logar sendo usuários, adicionar produtos em seus carrinhos, efetuar a compra dos produtos no carrinho, avaliar os produtos e buscar produtos.
+O grupo se propõe a modelar uma aplicação de vendas online (E-Commerce) de propósito geral. Nessa aplicação, serão expostos produtos em geral que clientes queiram vender e possivelmente comprar, os clientes poderão se registrar e logar sendo usuários, adicionar produtos em seus carrinhos, efetuar a compra dos produtos no carrinho utilizando um agente externo, nesse caso, cartão de crédito.
 
-# Diagrama Casos de Uso!
-![diagrama](https://user-images.githubusercontent.com/44981765/219095835-7bb1813b-d53c-47bd-a9fb-1a94772329df.PNG)
+# Diagrama Casos de Uso!!
+
+![Diagrama](https://user-images.githubusercontent.com/31044920/221423971-89de05e3-b815-44a2-95c2-1cc88663672c.png)
 
 
 # Fluxos casos de uso
@@ -81,6 +82,7 @@ O grupo se propõe a modelar uma aplicação de vendas online(E-Commerce) de pro
     - Nome
     - Descrição
     - Preço
+    - Quantidade
     - Foto
 2. O sistema valida as informações preenchidas.
 3. O sistema mostra uma mensagem de confirmação.
@@ -117,7 +119,7 @@ O grupo se propõe a modelar uma aplicação de vendas online(E-Commerce) de pro
 
 <br>
 
-## **5. Checkout (CARTÃO)**
+## **5. Checkout**
 <details>
 <summary>Expandir</summary>
 <p>
@@ -138,59 +140,6 @@ O grupo se propõe a modelar uma aplicação de vendas online(E-Commerce) de pro
 4. O sistema confirma a transação e adiciona o pedido a conta do usuário.
 
 > - **Fluxo secundário**: No passo 4, caso o pagamento não seja confirmado o sistema cancela a operação. O usuário pode cancelar a qualquer momento.
-
-</p>
-</details>
-
-<br>
-
-----
-
-<br>
-
-## **6. Checkout (PIX)**
-<details>
-<summary>Expandir</summary>
-<p>
-
-> - **Descrição**: Esse caso de uso é responsável pela criação de pedidos na conta do usuário, usando uma API do PIX.
-> - **Pré-condição**: Estar logado e na tela de carrinho de compras.
-> - **Pós-condição**: O pedido é cadastrado na conta do usuário
-## **Fluxo**
-1. O usuário fornece informações do endereço de entrega.
-    - CEP
-    - Número
-2. O sistema consulta a API e gera o código PIX(copia e cola)
-3. O sistema espera 24h para a efetuação do pagamento.
-4. O sistema confirma a transação e adiciona o pedido a conta do usuário.
-
-> - **Fluxo secundário**: No passo 3, caso o pagamento não seja confirmado o sistema cancela a operação. O usuário pode cancelar a qualquer momento. No passo 2 caso a requisição para a API falhe, uma mensagem de erro é mostrada ao usuário.
-
-</p>
-</details>
-
-<br>
-
-----
-
-<br>
-
-## **7. Avaliar produto**
-<details>
-<summary>Expandir</summary>
-<p>
-
-> - **Descrição**: Esse caso de uso é responsável pela criação de avaliações de produtos.
-> - **Pré-condição**: Estar logado, estar na tela de um produto já comprado.
-> - **Pós-condição**: A avaliação é vinculada ao produto.
-## **Fluxo**
-1. O usuário fornece uma avaliação.
-    - Nota (0 a 5)
-    - Comentário
-2. O sistema checa se o usuário comprou aquele produto.
-3. O sistema mostra uma mensgem de confirmação e vincula a avaliação ao produto.
-
-> - **Fluxo secundário**: No passo 2, caso o campo Comentário estiver vazio, uma mensagem de erro será mostrada ao usuário.
 
 </p>
 </details>
