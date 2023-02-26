@@ -40,6 +40,7 @@ public class RepositorioContaBDR implements IRepositorioConta {
 
     @Override
     public void atualizarCarrinho(String login, Carrinho carrinho) {
-
+        Optional<Conta> conta = contas.stream().filter(c -> c.getLogin().equals(login)).findFirst();
+        conta.ifPresent(c -> c.setCarrinho(carrinho));
     }
 }

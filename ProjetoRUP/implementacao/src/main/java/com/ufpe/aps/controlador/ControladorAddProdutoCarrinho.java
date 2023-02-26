@@ -15,9 +15,8 @@ public class ControladorAddProdutoCarrinho {
     @Autowired
     IRepositorioConta repositorioConta;
 
-    public void addProdutoCarrinho(Produto produtoDTO) {
-        Produto produto = repositorioProduto.pegarProduto(produtoDTO.getId());
-
-//        repositorioConta
+    public void addProdutoCarrinho(String idProduto, String login, Integer quantidade) {
+        Produto produto = repositorioProduto.pegarProduto(idProduto);
+        repositorioConta.atualizarCarrinho(login);
     }
 }
