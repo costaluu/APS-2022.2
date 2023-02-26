@@ -9,5 +9,6 @@ public class IComunicacaoOperadoraCartaoImpl implements IComunicacaoOperadoraCar
 
     @Override
     public void finalizarPagamento(PagamentoDTO pagamentoDTO) {
+        System.out.println("Pagamento realizado com sucesso!");
     }
 }

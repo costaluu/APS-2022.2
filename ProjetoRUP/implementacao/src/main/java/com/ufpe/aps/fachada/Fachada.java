@@ -1,9 +1,6 @@
 package com.ufpe.aps.fachada;
 
-import com.ufpe.aps.controlador.ControladorAddProdutoCarrinho;
-import com.ufpe.aps.controlador.ControladorCadastrar;
-import com.ufpe.aps.controlador.ControladorLogin;
-import com.ufpe.aps.controlador.ControladorPublicarItem;
+import com.ufpe.aps.controlador.*;
 import com.ufpe.aps.entity.Produto;
 import com.ufpe.aps.pojo.PagamentoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +23,9 @@ public class Fachada {
     @Autowired
     ControladorPublicarItem controladorPublicarItem;
 
+    @Autowired
+    ControladorCheckout controladorCheckout;
+
     public void publicarItem(Produto itemDTO) {
         controladorPublicarItem.publicarItem(itemDTO);
     }
@@ -39,7 +39,7 @@ public class Fachada {
     }
 
     public void realizarPagamento(PagamentoDTO pagamentoDTO) {
-
+        controladorCheckout.realizarPagamento(pagamentoDTO);
     }
 
     public void cadastrarConta(String login, String senha) {

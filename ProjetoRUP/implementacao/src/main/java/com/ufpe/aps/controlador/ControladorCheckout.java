@@ -13,7 +13,5 @@ public class ControladorCheckout {
 
     public void realizarPagamento(PagamentoDTO pagamentoDTO) {
         comunicacaoOperadoraCartao.finalizarPagamento(pagamentoDTO);
-
-
     }
 }
