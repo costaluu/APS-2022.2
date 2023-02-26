@@ -1,5 +1,15 @@
 import React from "react";
 
+// const login = async () => {
+//     const user = {
+//         login: "teste2",
+//         senha: "teste2",
+//     }
+//     const res = await axios.post("http://localhost:8082/conta/cadastrar", user);
+//     if(res.status !== 200) return Promise.reject();
+//     return res.status;
+// };
+
 export default function Cadastro() {
     return (
         <div className="w-screen h-screen m-0 p-0 bg-gradient-to-r from-rose-100 to-teal-100 flex justify-center items-center">

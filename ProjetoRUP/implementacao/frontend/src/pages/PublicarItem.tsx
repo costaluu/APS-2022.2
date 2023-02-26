@@ -1,5 +1,17 @@
 import React from "react";
 
+// const publicarItem = () => {
+//     const produto = {
+//         id: "1",
+//         dono: "teste",
+//         nome: "Água",
+//         descricao: "Água pra beber",
+//         totalUnidades: 100,
+//         valor: 1.50
+//     }
+//     const res = await axios.post("http://localhost:8082/produto/publicar", produto);
+// }
+
 export default function PublicarItem() {
     return (
         <div className="w-screen h-screen m-0 p-0 bg-gradient-to-r from-rose-100 to-teal-100 flex justify-center items-center">

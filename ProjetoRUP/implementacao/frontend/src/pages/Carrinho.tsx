@@ -1,5 +1,17 @@
 import React, { useState } from "react";
 
+
+// const checkout = () => {
+//     const checkoutInfo = {
+//         login: "teste2",
+//         numCartao: "1",
+//         codSeguranca: 1,
+//         validade: "1",
+//         nomeNoCartao: "1"
+//     }
+//     const res = await axios.post("http://localhost:8082/carrinho/pagamento", user);
+// }
+
 export default function Item() {
     const imgSrc: string = `https://i.ibb.co/jfBrvxf/Capturar.png`;
     const [pagamentoCartao, setPagamentoCartao] = useState<boolean>(false);

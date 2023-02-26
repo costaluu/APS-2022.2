@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.security.auth.login.CredentialNotFoundException;
+
 @RestController
 @CrossOrigin
 @RequestMapping("${carrinho.servlet.path}")
@@ -19,6 +21,8 @@ public class TelaCheckoutPresenter {
         try{
             fachada.realizarPagamento(pagamentoDTO);
             return ResponseEntity.ok().build();
+        } catch (CredentialNotFoundException e) {
+            return ResponseEntity.status(401).body(e.getMessage());
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), null, 500);
         }

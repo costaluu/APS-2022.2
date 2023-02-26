@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useQuery } from "react-query";
+import axios from "axios";
 
 interface Response {
     login: string;
@@ -8,8 +9,13 @@ interface Response {
 }
 
 const login = async () => {
-    const res = await fetch("http://localhost:8082/carrinho/adicionar");
-    return res.json();
+    const user = {
+        login: "teste2",
+        senha: "teste2",
+    }
+    const res = await axios.post("http://localhost:8082/conta/login", user);
+    if(res.status !== 200) return Promise.reject();
+    return res.status;
 };
 
 export default function Login() {

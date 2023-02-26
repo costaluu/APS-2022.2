@@ -11,6 +11,8 @@ import com.ufpe.aps.repository.interfaces.IRepositorioProduto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.security.auth.login.CredentialNotFoundException;
+
 @Component
 public class ControladorCheckout {
 
@@ -42,6 +44,8 @@ public class ControladorCheckout {
         try {
             comunicacaoOperadoraCartao.finalizarPagamento(conta.getLogin(), pagamentoDTO.getNumCartao(),
                     pagamentoDTO.getCodSeguranca(), pagamentoDTO.getValidade(), pagamentoDTO.getNomeNoCartao(), pedido);
+        } catch (CredentialNotFoundException e){
+            throw new CredentialNotFoundException("Pagamento não autorizado");
         } catch (Exception e) {
             throw new Exception("Erro ao enviar pagamento");
         }

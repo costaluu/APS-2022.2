@@ -1,5 +1,14 @@
 import React from "react";
 
+// const addItemCarrinho = () => {
+//     const item = {
+//         login: "1",
+//         idProduto: "1",
+//         quantidade: 1,
+//     }
+//     const res = await axios.post("http://localhost:8082/carrinho/adicionar", item);
+// }
+
 export default function Item() {
     const imgSrc: string = `https://i.ibb.co/jfBrvxf/Capturar.png`;
     return (
