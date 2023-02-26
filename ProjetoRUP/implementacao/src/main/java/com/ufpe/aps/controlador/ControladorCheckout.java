@@ -11,7 +11,7 @@ public class ControladorCheckout {
     @Autowired
     IComunicacaoOperadoraCartao comunicacaoOperadoraCartao;
 
-    public void realizarPagamento(PagamentoDTO pagamentoDTO) {
+    public void realizarPagamento(PagamentoDTO pagamentoDTO) throws Exception {
         comunicacaoOperadoraCartao.finalizarPagamento(pagamentoDTO);
     }
 }

@@ -38,7 +38,7 @@ public class Fachada {
         return controladorLogin.efetuarLogin(login, senha);
     }
 
-    public void realizarPagamento(PagamentoDTO pagamentoDTO) {
+    public void realizarPagamento(PagamentoDTO pagamentoDTO) throws Exception {
         controladorCheckout.realizarPagamento(pagamentoDTO);
     }
 
