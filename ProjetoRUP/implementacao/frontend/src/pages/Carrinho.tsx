@@ -1,20 +1,50 @@
+import axios from "axios";
 import React, { useState } from "react";
+import { useQuery } from "react-query";
 
-
-// const checkout = () => {
-//     const checkoutInfo = {
-//         login: "teste2",
-//         numCartao: "1",
-//         codSeguranca: 1,
-//         validade: "1",
-//         nomeNoCartao: "1"
-//     }
-//     const res = await axios.post("http://localhost:8082/carrinho/pagamento", user);
-// }
+const checkout = async () => {
+    const checkoutInfo = {
+        login: "teste2",
+        numCartao: "1",
+        codSeguranca: 1,
+        validade: "1",
+        nomeNoCartao: "1",
+    };
+    const res = await axios.post("http://localhost:8082/carrinho/pagamento", checkoutInfo);
+    return res.status;
+};
 
 export default function Item() {
     const imgSrc: string = `https://i.ibb.co/jfBrvxf/Capturar.png`;
     const [pagamentoCartao, setPagamentoCartao] = useState<boolean>(false);
+
+    const { data, error, isLoading, refetch } = useQuery("publicarItem", checkout, {
+        enabled: false,
+    });
+
+    let placeHolder = <></>;
+
+    if (isLoading) {
+        placeHolder = (
+            <div className="px-2 py-1 border-l-4 border-blue-400 text-blue-700 bg-blue-100">
+                Loading...
+            </div>
+        );
+    }
+
+    if (error) {
+        placeHolder = (
+            <div className="px-2 py-1 border-l-4 border-red-400 text-red-700 bg-red-100">Error</div>
+        );
+    }
+
+    if (data) {
+        placeHolder = (
+            <div className="px-2 py-1 border-l-4 border-green-400 text-green-700 bg-green-100">
+                Logged!
+            </div>
+        );
+    }
 
     return (
         <div className="w-screen h-screen m-0 p-0 bg-gradient-to-r from-rose-100 to-teal-100 flex justify-center items-center">
@@ -37,7 +67,7 @@ export default function Item() {
                         <span className="text-md text-gray-900">R$ 1000</span>
                     </div>
                 </div>
-                <div className="w-full flex flex-col justify-end">
+                <div className="w-full flex flex-col justify-end border-t border-gray-300">
                     <span className="font-semibold place-self-end">Total</span>
                     <span className="text-gray-800 place-self-end">R$ 2000</span>
                 </div>
@@ -61,6 +91,7 @@ export default function Item() {
                         placeholder="Passowrd"></input>
                 </div>
                 <span>Método de pagamento</span>
+                {placeHolder}
                 <div className="flex flex-col space-y-2 w-full">
                     <div className="grid grid-cols-2">
                         <button
@@ -104,6 +135,7 @@ export default function Item() {
                                     placeholder="Código de segurança"></input>
                             </div>
                             <button
+                                onClick={() => refetch()}
                                 type="button"
                                 className="px-2 py-1 w-full bg-teal-400 rounded-md text-white hover:bg-teal-500">
                                 Efetuar pagamento
@@ -112,6 +144,7 @@ export default function Item() {
                     ) : (
                         <>
                             <button
+                                onClick={() => refetch()}
                                 type="button"
                                 className="px-2 py-1 w-full bg-teal-400 rounded-md text-white hover:bg-teal-500">
                                 Efetuar pagamento

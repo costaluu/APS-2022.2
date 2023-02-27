@@ -1,20 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { useQuery } from "react-query";
 import axios from "axios";
-
-interface Response {
-    login: string;
-    idProduto: string;
-    quantidade: number;
-}
 
 const login = async () => {
     const user = {
         login: "teste2",
         senha: "teste2",
-    }
+    };
     const res = await axios.post("http://localhost:8082/conta/login", user);
-    if(res.status !== 200) return Promise.reject();
+    if (res.status !== 200) return Promise.reject();
     return res.status;
 };
 
