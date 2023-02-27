@@ -71,14 +71,14 @@ export default function Item() {
                     <span className="font-semibold place-self-end">Total</span>
                     <span className="text-gray-800 place-self-end">R$ 2000</span>
                 </div>
-                <span className="text-gray-900">CEP</span>
+                {/* <span className="text-gray-900">CEP</span>
                 <input
                     type="text"
                     className="px-2 py-1 w-full border border-gray-300 text-gray-800 rounded-md outline-none"></input>
                 <span className="text-gray-900">Número</span>
                 <input
                     type="text"
-                    className="px-2 py-1 w-full border border-gray-300 text-gray-800 rounded-md outline-none"></input>
+                    className="px-2 py-1 w-full border border-gray-300 text-gray-800 rounded-md outline-none"></input> */}
                 <span>Credenciais</span>
                 <div className="w-full flex flex-row space-x-2">
                     <input
