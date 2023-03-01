@@ -1,9 +1,7 @@
 package com.ufpe.aps.presenter;
 
-import com.ufpe.aps.entity.Produto;
 import com.ufpe.aps.fachada.Fachada;
 import com.ufpe.aps.pojo.AddProdutoCarrinhoDTO;
-import com.ufpe.aps.repository.interfaces.IRepositorioProduto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,11 +12,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("${carrinho.servlet.path}")
 public class TelaProdutoPresenter {
 
+    private final Fachada fachada;
+
     @Autowired
-    Fachada fachada;
+    public TelaProdutoPresenter(Fachada fachada) {
+        this.fachada = fachada;
+    }
 
     @PostMapping("/adicionar")
-    public ResponseEntity adicionar(@RequestBody AddProdutoCarrinhoDTO produtoDTO) {
+    public ResponseEntity addProdutoCarrinho(@RequestBody AddProdutoCarrinhoDTO produtoDTO) {
         try{
             fachada.addProdutoCarrinho(produtoDTO);
             return ResponseEntity.ok().build();

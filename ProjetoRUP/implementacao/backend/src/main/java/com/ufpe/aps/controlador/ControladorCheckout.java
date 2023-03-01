@@ -5,50 +5,60 @@ import com.ufpe.aps.entity.Conta;
 import com.ufpe.aps.entity.Pedido;
 import com.ufpe.aps.externo.IComunicacaoOperadoraCartao;
 import com.ufpe.aps.pojo.PagamentoDTO;
-import com.ufpe.aps.repository.interfaces.IRepositorioConta;
-import com.ufpe.aps.repository.interfaces.IRepositorioPedido;
-import com.ufpe.aps.repository.interfaces.IRepositorioProduto;
+import com.ufpe.aps.repository.IRepositorioConta;
+import com.ufpe.aps.repository.IRepositorioPedido;
+import com.ufpe.aps.repository.IRepositorioProduto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-
-import javax.security.auth.login.CredentialNotFoundException;
+import org.springframework.web.client.HttpClientErrorException;
 
 @Component
 public class ControladorCheckout {
 
-    @Autowired
-    IComunicacaoOperadoraCartao comunicacaoOperadoraCartao;
+    private final IComunicacaoOperadoraCartao comunicacaoOperadoraCartao;
+
+    private final IRepositorioConta repositorioConta;
+
+    private final IRepositorioProduto repositorioProduto;
+
+    private final IRepositorioPedido repositorioPedido;
 
     @Autowired
-    IRepositorioConta repositorioConta;
+    public ControladorCheckout(IRepositorioProduto repositorioProduto,
+                               IRepositorioConta repositorioConta,
+                               IRepositorioPedido repositorioPedido,
+                               IComunicacaoOperadoraCartao comunicacaoOperadoraCartao) {
+        this.repositorioProduto = repositorioProduto;
+        this.repositorioConta = repositorioConta;
+        this.repositorioPedido = repositorioPedido;
+        this.comunicacaoOperadoraCartao = comunicacaoOperadoraCartao;
+    }
 
-    @Autowired
-    IRepositorioProduto repositorioProduto;
-
-    @Autowired
-    IRepositorioPedido repositorioPedido;
-
-    public void realizarPagamento(PagamentoDTO pagamentoDTO) throws Exception {
+    public void realizarPagamento(PagamentoDTO pagamentoDTO) throws HttpClientErrorException {
 
         Conta conta = repositorioConta.pegarConta(pagamentoDTO.getLogin());
         if (conta == null) {
-            throw new Exception("Conta não encontrada");
+            throw new HttpClientErrorException(HttpStatus.valueOf(500), "Conta não encontrada");
         }
         Carrinho meuCarrinho = conta.pegarCarrinho();
 
         if (meuCarrinho == null) {
-            throw new Exception("Carrinho não encontrado");
+            throw new HttpClientErrorException(HttpStatus.valueOf(500), "Carrinho não encontrado");
         }
 
         Pedido pedido = repositorioPedido.criarPedido(conta.getLogin(), meuCarrinho);
+
         try {
             comunicacaoOperadoraCartao.finalizarPagamento(conta.getLogin(), pagamentoDTO.getNumCartao(),
                     pagamentoDTO.getCodSeguranca(), pagamentoDTO.getValidade(), pagamentoDTO.getNomeNoCartao(), pedido);
-        } catch (CredentialNotFoundException e){
-            throw new CredentialNotFoundException("Pagamento não autorizado");
-        } catch (Exception e) {
-            throw new Exception("Erro ao enviar pagamento");
+        } catch (HttpClientErrorException e) {
+            String message = "";
+            if(e.getStatusCode() == HttpStatus.UNAUTHORIZED) message = "Pagamento não autorizado";
+            else message = "Erro ao finalizar pagamento";
+            throw new HttpClientErrorException(e.getStatusCode(), message);
         }
+
 
         repositorioPedido.confirmarPedido(conta.getLogin(), pedido);
 

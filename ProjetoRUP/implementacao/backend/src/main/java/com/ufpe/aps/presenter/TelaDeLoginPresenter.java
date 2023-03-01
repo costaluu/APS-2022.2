@@ -11,8 +11,13 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @RequestMapping("${conta.servlet.path}")
 public class TelaDeLoginPresenter {
+
+    private final Fachada fachada;
+
     @Autowired
-    Fachada fachada;
+    public TelaDeLoginPresenter(Fachada fachada) {
+        this.fachada = fachada;
+    }
 
     @PostMapping("/login")
     public ResponseEntity efetuarLogin(@RequestBody Conta conta) {

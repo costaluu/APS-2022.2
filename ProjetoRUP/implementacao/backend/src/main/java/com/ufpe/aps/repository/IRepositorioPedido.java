@@ -1,4 +1,4 @@
-package com.ufpe.aps.repository.interfaces;
+package com.ufpe.aps.repository;
 
 import com.ufpe.aps.entity.Carrinho;
 import com.ufpe.aps.entity.Pedido;

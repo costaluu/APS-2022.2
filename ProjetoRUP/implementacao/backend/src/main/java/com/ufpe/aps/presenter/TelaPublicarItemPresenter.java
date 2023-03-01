@@ -10,8 +10,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("${produto.servlet.path}")
 public class TelaPublicarItemPresenter {
 
+    private final Fachada fachada;
+
     @Autowired
-    Fachada fachada;
+    public TelaPublicarItemPresenter(Fachada fachada) {
+        this.fachada = fachada;
+    }
 
     @PostMapping("/publicar")
     public void publicar(@RequestBody Produto itemDTO) {

@@ -1,7 +1,7 @@
 package com.ufpe.aps.controller;
 
-import com.ufpe.aps.repository.interfaces.IRepositorioProduto;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ufpe.aps.factory.FabricaRepositorios;
+import com.ufpe.aps.repository.IRepositorioProduto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("${produto.servlet.path}")
 public class ProdutoController {
 
-    @Autowired
     IRepositorioProduto repositorioProduto;
+
+    public ProdutoController() {
+        this.repositorioProduto = FabricaRepositorios.pegarFabrica().criarRepositorioProduto();
+    }
 
     @GetMapping
     public ResponseEntity getAllProdutos() {

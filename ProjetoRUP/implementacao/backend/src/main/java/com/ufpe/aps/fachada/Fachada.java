@@ -2,30 +2,40 @@ package com.ufpe.aps.fachada;
 
 import com.ufpe.aps.controlador.*;
 import com.ufpe.aps.entity.Produto;
+import com.ufpe.aps.exception.AccountAlreadyRegisteredException;
 import com.ufpe.aps.pojo.AddProdutoCarrinhoDTO;
 import com.ufpe.aps.pojo.PagamentoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
-@Service
-@Scope("singleton")
+import javax.security.auth.login.CredentialNotFoundException;
+
+@Component
 public class Fachada {
 
-    @Autowired
-    ControladorCadastrar controladorCadastrar;
+    private final ControladorCadastrar controladorCadastrar;
+
+    private final ControladorLogin controladorLogin;
+
+    private final ControladorAddProdutoCarrinho controladorAddProdutoCarrinho;
+
+    private final ControladorPublicarItem controladorPublicarItem;
+
+    private final ControladorCheckout controladorCheckout;
 
     @Autowired
-    ControladorLogin controladorLogin;
-
-    @Autowired
-    ControladorAddProdutoCarrinho controladorAddProdutoCarrinho;
-
-    @Autowired
-    ControladorPublicarItem controladorPublicarItem;
-
-    @Autowired
-    ControladorCheckout controladorCheckout;
+    public Fachada(ControladorCadastrar controladorCadastrar, ControladorLogin controladorLogin,
+                   ControladorAddProdutoCarrinho controladorAddProdutoCarrinho,
+                   ControladorPublicarItem controladorPublicarItem, ControladorCheckout controladorCheckout) {
+        this.controladorCadastrar = controladorCadastrar;
+        this.controladorLogin = controladorLogin;
+        this.controladorAddProdutoCarrinho = controladorAddProdutoCarrinho;
+        this.controladorPublicarItem = controladorPublicarItem;
+        this.controladorCheckout = controladorCheckout;
+    }
 
     public void publicarItem(Produto itemDTO) {
         controladorPublicarItem.publicarItem(itemDTO);
@@ -39,11 +49,11 @@ public class Fachada {
         return controladorLogin.efetuarLogin(login, senha);
     }
 
-    public void realizarPagamento(PagamentoDTO pagamentoDTO) throws Exception {
+    public void realizarPagamento(PagamentoDTO pagamentoDTO) throws HttpClientErrorException {
         controladorCheckout.realizarPagamento(pagamentoDTO);
     }
 
-    public void cadastrarConta(String login, String senha) throws Exception {
+    public void cadastrarConta(String login, String senha) throws AccountAlreadyRegisteredException {
         controladorCadastrar.cadastrarConta(login, senha);
     }
 }

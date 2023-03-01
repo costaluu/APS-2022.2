@@ -2,13 +2,20 @@ package com.ufpe.aps.repository.impl;
 
 import com.ufpe.aps.entity.Carrinho;
 import com.ufpe.aps.entity.Conta;
-import com.ufpe.aps.repository.interfaces.IRepositorioConta;
-import org.springframework.stereotype.Component;
+import com.ufpe.aps.repository.IRepositorioConta;
 
 import java.util.*;
 
-@Component
 public class CadastroConta implements IRepositorioConta {
+
+    private static CadastroConta instance;
+
+    public static CadastroConta getInstance() {
+        if (instance == null) {
+            instance = new CadastroConta();
+        }
+        return instance;
+    }
 
     private Map<String, Conta> contas;
 
@@ -16,6 +23,7 @@ public class CadastroConta implements IRepositorioConta {
         contas = new HashMap<>();
         contas.put("teste1", new Conta("teste1", "teste1", new Carrinho()));
         contas.put("teste2", new Conta("teste2", "teste2", new Carrinho()));
+        System.out.println("Contas criadas: " + contas.size());
     }
 
     @Override

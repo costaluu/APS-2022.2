@@ -3,21 +3,29 @@ package com.ufpe.aps.repository.impl;
 import com.ufpe.aps.entity.Carrinho;
 import com.ufpe.aps.entity.Pedido;
 import com.ufpe.aps.entity.ProdutoParaCarrinho;
-import com.ufpe.aps.repository.interfaces.IRepositorioPedido;
-import org.springframework.stereotype.Component;
+import com.ufpe.aps.repository.IRepositorioPedido;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Component
 public class CadastroPedido implements IRepositorioPedido {
+
+    private static CadastroPedido instance;
+
+    public static CadastroPedido getInstance() {
+        if (instance == null) {
+            instance = new CadastroPedido();
+        }
+        return instance;
+    }
 
     private Map<Integer, Pedido> pedidos;
 
     public CadastroPedido() {
         pedidos = new HashMap<>();
+        System.out.println("Pedidos criados: " + pedidos.size());
     }
 
     @Override

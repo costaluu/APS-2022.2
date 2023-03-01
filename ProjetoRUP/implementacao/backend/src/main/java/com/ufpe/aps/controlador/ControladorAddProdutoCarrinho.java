@@ -4,21 +4,24 @@ import com.ufpe.aps.entity.Carrinho;
 import com.ufpe.aps.entity.Conta;
 import com.ufpe.aps.entity.Produto;
 import com.ufpe.aps.entity.ProdutoParaCarrinho;
-import com.ufpe.aps.repository.interfaces.IRepositorioConta;
-import com.ufpe.aps.repository.interfaces.IRepositorioProduto;
+import com.ufpe.aps.repository.IRepositorioConta;
+import com.ufpe.aps.repository.IRepositorioProduto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 @Component
 public class ControladorAddProdutoCarrinho {
 
-    @Autowired
-    IRepositorioProduto repositorioProduto;
+
+    private final IRepositorioProduto repositorioProduto;
+
+    private final IRepositorioConta repositorioConta;
 
     @Autowired
-    IRepositorioConta repositorioConta;
+    public ControladorAddProdutoCarrinho(IRepositorioProduto repositorioProduto, IRepositorioConta repositorioConta) {
+        this.repositorioConta = repositorioConta;
+        this.repositorioProduto = repositorioProduto;
+    }
 
     public void addProdutoCarrinho(String login, String idProduto, Integer quantidade) throws Exception {
         Conta conta = repositorioConta.pegarConta(login);

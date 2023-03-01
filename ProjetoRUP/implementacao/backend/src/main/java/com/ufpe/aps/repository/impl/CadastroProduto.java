@@ -3,19 +3,25 @@ package com.ufpe.aps.repository.impl;
 import com.ufpe.aps.entity.Carrinho;
 import com.ufpe.aps.entity.Produto;
 import com.ufpe.aps.entity.ProdutoParaCarrinho;
-import com.ufpe.aps.repository.interfaces.IRepositorioProduto;
-import org.springframework.stereotype.Component;
+import com.ufpe.aps.repository.IRepositorioProduto;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-@Component
 public class CadastroProduto implements IRepositorioProduto {
 
     private Map<String, Produto> produtos;
+
+    private static CadastroProduto instance;
+
+    public static synchronized CadastroProduto getInstance() {
+        if (instance == null) {
+            instance = new CadastroProduto();
+        }
+        return instance;
+    }
 
     public CadastroProduto() {
         produtos = new HashMap<>();
@@ -29,6 +35,7 @@ public class CadastroProduto implements IRepositorioProduto {
         produtos.put("8", new Produto("8", "Teste1", "Descrição 8" , "Categoria 8", 10, 10.0));
         produtos.put("9", new Produto("9", "Teste1", "Descrição 9" , "Categoria 9", 10, 10.0));
         produtos.put("10", new Produto("10", "Teste1", "Descrição 10" , "Categoria 10", 10, 10.0));
+        System.out.println("Produtos criados: " + produtos.size());
     }
 
     @Override
@@ -38,7 +45,7 @@ public class CadastroProduto implements IRepositorioProduto {
 
     @Override
     public Produto pegarProduto(String idProduto, Integer quantidade) {
-        if(produtos.get(idProduto).getTotalUnidades() < quantidade)
+        if(!produtos.containsKey(idProduto))
             return null;
         return produtos.get(idProduto);
     }

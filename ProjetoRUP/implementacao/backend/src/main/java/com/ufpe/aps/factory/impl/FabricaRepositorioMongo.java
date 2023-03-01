@@ -1,23 +1,23 @@
 package com.ufpe.aps.factory.impl;
 
 import com.ufpe.aps.factory.FabricaAbstrataRepositorios;
-import com.ufpe.aps.repository.interfaces.IRepositorioConta;
-import com.ufpe.aps.repository.interfaces.IRepositorioPedido;
-import com.ufpe.aps.repository.interfaces.IRepositorioProduto;
+import com.ufpe.aps.repository.IRepositorioConta;
+import com.ufpe.aps.repository.IRepositorioPedido;
+import com.ufpe.aps.repository.IRepositorioProduto;
 
 public class FabricaRepositorioMongo implements FabricaAbstrataRepositorios {
     @Override
-    public IRepositorioProduto criarProdutoRepository() {
-        return null;
+    public IRepositorioProduto criarRepositorioProduto() {
+        throw new RuntimeException("Not implemented yet");
     }
 
     @Override
-    public IRepositorioPedido criarPedidoRepository() {
-        return null;
+    public IRepositorioPedido criarRepositorioPedido() {
+        throw new RuntimeException("Not implemented yet");
     }
 
     @Override
     public IRepositorioConta criarRepositorioConta() {
-        return null;
+        throw new RuntimeException("Not implemented yet");
     }
 }

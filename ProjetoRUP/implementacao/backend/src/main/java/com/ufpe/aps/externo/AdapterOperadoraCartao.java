@@ -2,9 +2,11 @@ package com.ufpe.aps.externo;
 
 import com.ufpe.aps.entity.Pedido;
 import com.ufpe.aps.pojo.PagamentoDTO;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -12,27 +14,27 @@ import javax.security.auth.login.CredentialNotFoundException;
 
 @Component
 public class AdapterOperadoraCartao implements IComunicacaoOperadoraCartao{
+
+    @Value("${url.api.cartao}")
+    private String urlApiCartao;
+
     @Override
-    public void finalizarPagamento(String login, String numCartao, int codSeguranca, String validade, String nomeNoCartao, Pedido meuPedido) throws Exception {
-        try {
-            enviarPagamento(login, numCartao, codSeguranca, validade, nomeNoCartao, meuPedido);
-        } catch (CredentialNotFoundException e) {
-            throw new CredentialNotFoundException("Pagamento não autorizado");
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao enviar pagamento");
-        }
+    public void finalizarPagamento(String login, String numCartao, int codSeguranca,
+                                   String validade, String nomeNoCartao, Pedido meuPedido)
+            throws HttpClientErrorException {
+         enviarPagamento(login, numCartao, codSeguranca, validade, nomeNoCartao, meuPedido);
     }
 
     private void enviarPagamento(String login, String numCartao, int codSeguranca,
-                                 String validade, String nomeNoCartao, Pedido meuPedido) throws Exception{
+                                 String validade, String nomeNoCartao, Pedido meuPedido) {
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<String> response = restTemplate.getForEntity("http://localhost:8081/pagamento", String.class);
+        ResponseEntity<String> response = restTemplate.getForEntity(this.urlApiCartao, String.class);
 
         if(response.getStatusCode().is4xxClientError()){
-            throw new CredentialNotFoundException("Pagamento não autorizado");
+            throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "Pagamento não autorizado");
         } else if(response.getStatusCode().is5xxServerError()){
-            throw new RuntimeException("Erro ao enviar pagamento");
+            throw new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro ao enviar pagamento");
         }
 
 
