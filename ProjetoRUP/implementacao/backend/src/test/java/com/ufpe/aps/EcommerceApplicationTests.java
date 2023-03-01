@@ -129,7 +129,7 @@ class EcommerceApplicationTests {
 						.withBody("Não autorizado")));
 		PagamentoDTO pagamentoDTO = getPagamentoDTO();
 		assertThat(telaCheckoutPresenter.efetuarPagamento(pagamentoDTO))
-				.isEqualTo(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("401 Pagamento não autorizado"));
+				.isEqualTo(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("401  Pagamento não autorizado"));
 	}
 
 

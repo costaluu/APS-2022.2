@@ -5,33 +5,52 @@ import com.ufpe.aps.factory.impl.FabricaRepositoriosInMemory;
 import com.ufpe.aps.repository.IRepositorioConta;
 import com.ufpe.aps.repository.IRepositorioPedido;
 import com.ufpe.aps.repository.IRepositorioProduto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
+import org.springframework.core.env.Environment;
 
 @Configuration
+@Scope("singleton")
 public class RepositorioConfiguration {
 
 //    @Value("${fabrica.repositorios.choice}")
-    private static String choice = "inmemory";
+    private final String choice;
+
+    FabricaRepositorioMongo fabricaRepositorioMongo;
+
+    FabricaRepositoriosInMemory fabricaRepositoriosInMemory;
+
+    @Autowired
+    public RepositorioConfiguration(FabricaRepositorioMongo fabricaRepositorioMongo,
+                                    FabricaRepositoriosInMemory fabricaRepositoriosInMemory,
+                                    Environment environment) {
+        this.fabricaRepositorioMongo = fabricaRepositorioMongo;
+        this.fabricaRepositoriosInMemory = fabricaRepositoriosInMemory;
+        this.choice = environment.getProperty("fabrica.repositorios.choice");
+        System.out.println("RepositorioConfiguration");
+    }
+
     @Bean
     public IRepositorioConta repositorioConta() {
-        if(choice.equals("MONGO"))
-            return new FabricaRepositorioMongo().criarRepositorioConta();
+        if(choice.equalsIgnoreCase("MONGO"))
+            return fabricaRepositorioMongo.criarRepositorioConta();
         return new FabricaRepositoriosInMemory().criarRepositorioConta();
     }
 
     @Bean
     public IRepositorioProduto repositorioProduto() {
-        if(choice.equals("MONGO"))
-            return new FabricaRepositorioMongo().criarRepositorioProduto();
+        if(choice.equalsIgnoreCase("MONGO"))
+            return fabricaRepositorioMongo.criarRepositorioProduto();
         return new FabricaRepositoriosInMemory().criarRepositorioProduto();
     }
 
     @Bean
     public IRepositorioPedido repositorioPedido(){
-        if(choice.equals("MONGO"))
-            return new FabricaRepositorioMongo().criarRepositorioPedido();
+        if(choice.equalsIgnoreCase("MONGO"))
+            return fabricaRepositorioMongo.criarRepositorioPedido();
         return new FabricaRepositoriosInMemory().criarRepositorioPedido();
     }
 

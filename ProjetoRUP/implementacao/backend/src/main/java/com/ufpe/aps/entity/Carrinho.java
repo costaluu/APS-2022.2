@@ -15,14 +15,12 @@ import java.util.Map;
 @Getter
 public class Carrinho {
 
-//    private List<ProdutoParaCarrinho> produtos;
     private Map<String, ProdutoParaCarrinho> produtos;
     public Carrinho(){
         this.produtos = new HashMap<>();
     }
 
     public void esvaziarCarrinho(){
-//        this.produtos = new ArrayList<>();
         this.produtos.clear();
     }
 

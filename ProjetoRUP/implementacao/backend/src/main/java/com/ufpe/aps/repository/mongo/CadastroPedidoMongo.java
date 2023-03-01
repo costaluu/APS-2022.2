@@ -1,35 +1,31 @@
-package com.ufpe.aps.repository.impl;
+package com.ufpe.aps.repository.mongo;
 
 import com.ufpe.aps.entity.Carrinho;
 import com.ufpe.aps.entity.Pedido;
 import com.ufpe.aps.entity.ProdutoParaCarrinho;
 import com.ufpe.aps.repository.IRepositorioPedido;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public class CadastroPedido implements IRepositorioPedido {
+@Component
+public class CadastroPedidoMongo implements IRepositorioPedido {
 
-    private static CadastroPedido instance;
 
-    public static CadastroPedido getInstance() {
-        if (instance == null) {
-            instance = new CadastroPedido();
-        }
-        return instance;
-    }
+    private final PedidoMongoRepository pedidoMongoRepository;
 
-    private Map<Integer, Pedido> pedidos;
+    private static int count = 0;
 
-    public CadastroPedido() {
-        pedidos = new HashMap<>();
-        System.out.println("Pedidos criados: " + pedidos.size());
+    @Autowired
+    public CadastroPedidoMongo(PedidoMongoRepository pedidoMongoRepository) {
+        this.pedidoMongoRepository = pedidoMongoRepository;
+        System.out.println("Criando CadastroPedidoMongo: " + count++);
     }
 
     @Override
     public Pedido criarPedido(String login, Carrinho carrinho) {
+        List<Pedido> pedidos = pedidoMongoRepository.findAll();
         Pedido pedido = new Pedido();
         pedido.setIdPedido(pedidos.size() + 1);
         pedido.setLoginCliente(login);
@@ -46,6 +42,6 @@ public class CadastroPedido implements IRepositorioPedido {
     @Override
     public void confirmarPedido(String login, Pedido pedido) {
         pedido.setStatusPedido("Confirmado");
-        pedidos.put(pedido.getIdPedido(), pedido);
+        pedidoMongoRepository.save(pedido);
     }
 }

@@ -1,4 +1,4 @@
-package com.ufpe.aps.repository.impl;
+package com.ufpe.aps.repository.inmemory;
 
 import com.ufpe.aps.entity.Carrinho;
 import com.ufpe.aps.entity.Conta;

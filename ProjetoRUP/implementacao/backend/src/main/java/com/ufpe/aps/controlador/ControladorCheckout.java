@@ -65,5 +65,7 @@ public class ControladorCheckout {
         repositorioProduto.atualizaEstoquesProdutos(meuCarrinho);
 
         conta.pegarCarrinho().esvaziarCarrinho();
+
+        repositorioConta.atualizarCarrinho(conta.getLogin(), conta.pegarCarrinho());
     }
 }
