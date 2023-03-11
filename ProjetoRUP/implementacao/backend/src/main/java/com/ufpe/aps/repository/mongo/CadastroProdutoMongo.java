@@ -1,9 +1,9 @@
 package com.ufpe.aps.repository.mongo;
 
-import com.ufpe.aps.entity.Carrinho;
-import com.ufpe.aps.entity.Produto;
-import com.ufpe.aps.entity.ProdutoParaCarrinho;
-import com.ufpe.aps.repository.IRepositorioProduto;
+import com.ufpe.aps.carrinho.Carrinho;
+import com.ufpe.aps.produto.Produto;
+import com.ufpe.aps.produtoparacarrinho.ProdutoParaCarrinho;
+import com.ufpe.aps.produto.IRepositorioProduto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

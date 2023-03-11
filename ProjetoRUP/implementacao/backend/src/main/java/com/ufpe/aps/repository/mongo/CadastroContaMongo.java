@@ -1,8 +1,8 @@
 package com.ufpe.aps.repository.mongo;
 
-import com.ufpe.aps.entity.Carrinho;
-import com.ufpe.aps.entity.Conta;
-import com.ufpe.aps.repository.IRepositorioConta;
+import com.ufpe.aps.carrinho.Carrinho;
+import com.ufpe.aps.conta.Conta;
+import com.ufpe.aps.conta.IRepositorioConta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;

@@ -1,7 +1,9 @@
 package com.ufpe.aps.factory.impl;
 
+import com.ufpe.aps.conta.IRepositorioConta;
 import com.ufpe.aps.factory.FabricaAbstrataRepositorios;
-import com.ufpe.aps.repository.*;
+import com.ufpe.aps.pedido.IRepositorioPedido;
+import com.ufpe.aps.produto.IRepositorioProduto;
 import com.ufpe.aps.repository.mongo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

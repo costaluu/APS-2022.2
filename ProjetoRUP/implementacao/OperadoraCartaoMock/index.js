@@ -7,7 +7,7 @@ app.use(cors())
 
 app.get('/pagamento', (req, res) => {
   console.log('Recebendo requisição de pagamento')
-  res.status(401).send('Hello World!')
+  res.status(200).send('Hello World!')
 })
 
 app.listen(port, () => {

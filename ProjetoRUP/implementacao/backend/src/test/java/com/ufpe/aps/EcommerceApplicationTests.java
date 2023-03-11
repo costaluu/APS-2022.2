@@ -1,10 +1,10 @@
 package com.ufpe.aps;
 
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
-import com.ufpe.aps.entity.Conta;
+import com.ufpe.aps.conta.Conta;
+import com.ufpe.aps.gui.*;
 import com.ufpe.aps.pojo.AddProdutoCarrinhoDTO;
 import com.ufpe.aps.pojo.PagamentoDTO;
-import com.ufpe.aps.presenter.*;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -129,7 +129,7 @@ class EcommerceApplicationTests {
 						.withBody("Não autorizado")));
 		PagamentoDTO pagamentoDTO = getPagamentoDTO();
 		assertThat(telaCheckoutPresenter.efetuarPagamento(pagamentoDTO))
-				.isEqualTo(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("401  Pagamento não autorizado"));
+				.isEqualTo(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("401 Pagamento não autorizado"));
 	}
 
 

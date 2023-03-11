@@ -1,31 +1,35 @@
-package com.ufpe.aps.repository.mongo;
+package com.ufpe.aps.repository.inmemory;
 
 import com.ufpe.aps.carrinho.Carrinho;
 import com.ufpe.aps.pedido.Pedido;
 import com.ufpe.aps.produtoparacarrinho.ProdutoParaCarrinho;
 import com.ufpe.aps.pedido.IRepositorioPedido;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-@Component
-public class CadastroPedidoMongo implements IRepositorioPedido {
+public class CadastroPedidoRepositoryInMemory implements IRepositorioPedido {
 
+    private static CadastroPedidoRepositoryInMemory instance;
 
-    private final PedidoMongoRepository pedidoMongoRepository;
+    public static CadastroPedidoRepositoryInMemory getInstance() {
+        if (instance == null) {
+            instance = new CadastroPedidoRepositoryInMemory();
+        }
+        return instance;
+    }
 
-    private static int count = 0;
+    private Map<Integer, Pedido> pedidos;
 
-    @Autowired
-    public CadastroPedidoMongo(PedidoMongoRepository pedidoMongoRepository) {
-        this.pedidoMongoRepository = pedidoMongoRepository;
-        System.out.println("Criando CadastroPedidoMongo: " + count++);
+    public CadastroPedidoRepositoryInMemory() {
+        pedidos = new HashMap<>();
+        System.out.println("Pedidos criados: " + pedidos.size());
     }
 
     @Override
     public Pedido criarPedido(String login, Carrinho carrinho) {
-        List<Pedido> pedidos = pedidoMongoRepository.findAll();
         Pedido pedido = new Pedido();
         pedido.setIdPedido(pedidos.size() + 1);
         pedido.setLoginCliente(login);
@@ -42,6 +46,6 @@ public class CadastroPedidoMongo implements IRepositorioPedido {
     @Override
     public void confirmarPedido(String login, Pedido pedido) {
         pedido.setStatusPedido("Confirmado");
-        pedidoMongoRepository.save(pedido);
+        pedidos.put(pedido.getIdPedido(), pedido);
     }
 }

@@ -1,6 +1,6 @@
 package com.ufpe.aps.controller;
 
-import com.ufpe.aps.repository.IRepositorioProduto;
+import com.ufpe.aps.produto.IRepositorioProduto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
