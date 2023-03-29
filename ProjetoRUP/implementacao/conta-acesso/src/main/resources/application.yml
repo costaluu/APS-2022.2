@@ -1,0 +1,41 @@
+server:
+  port: 8083
+
+conta:
+  servlet:
+    path: /conta
+carrinho:
+  servlet:
+    path: /carrinho
+
+# mongo ou inmemory
+fabrica:
+  repositorios:
+    choice: inmemory
+
+#spring.data.mongodb.uri=mongodb://localhost:27017
+#spring.data.mongodb.database=ecommerce
+
+#logging
+logging:
+  level:
+    org.springframework.web: INFO
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    enabled-by-default: true
+  endpoint:
+    health:
+      show-details: always
+    circuitbreakers:
+      enabled: true
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      register-health-indicator: true

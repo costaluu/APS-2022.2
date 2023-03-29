@@ -4,8 +4,8 @@ import axios from "axios";
 
 const login = async () => {
     const user = {
-        login: "teste2",
-        senha: "teste2",
+        login: "testIUFGIe2",
+        senha: "teste",
     };
     const res = await axios.post("http://localhost:8082/conta/login", user);
     if (res.status !== 200) return Promise.reject();
