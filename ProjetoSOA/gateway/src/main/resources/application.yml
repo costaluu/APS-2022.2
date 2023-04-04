@@ -1,0 +1,56 @@
+server:
+  port: 8080
+
+urls:
+  produto:
+    uri: lb://produto
+  conta-acesso:
+    uri: lb://conta-acesso
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka}
+
+gateway-paths:
+  produto: /produto
+  conta-acesso: /conta
+  carrinho: /carrinho
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      httpclient:
+        connect-timeout: 30000
+        response-timeout: 5s
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: '*'
+            allowedMethods: '*'
+            allowedHeaders: '*'
+      routes:
+        - id: produto
+          uri: ${urls.produto.uri}
+          predicates:
+            - Path=${gateway-paths.produto}/**
+            - Method=GET,POST,OPTIONS
+        - id: conta-acesso
+          uri: ${urls.conta-acesso.uri}
+          predicates:
+            - Path=${gateway-paths.conta-acesso}/**
+            - Method=GET,POST,OPTIONS
+        - id: carrinho
+          uri: ${urls.conta-acesso.uri}
+          predicates:
+              - Path=${gateway-paths.carrinho}/**
+              - Method=GET,POST,OPTIONS
+
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          gateway: DEBUG
