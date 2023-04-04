@@ -6,7 +6,7 @@ public class AccountNotFoundException extends Exception{
     }
 
     public AccountNotFoundException() {
-        super("RegistroConta não encontrada");
+        super("Conta não encontrada");
     }
 
     public AccountNotFoundException(Throwable cause) {

@@ -9,59 +9,27 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
-public class ServicoConta implements iServicoConta {
+public class ServicoConta implements IServicoConta {
 
-    private final IRepositorioConta repositorioConta;
+    private final IRegistroConta registroConta;
 
-
-    public ServicoConta(IRepositorioConta repositorioConta) {
-        this.repositorioConta = repositorioConta;
+    public ServicoConta(IRegistroConta registroConta) {
+        this.registroConta = registroConta;
     }
 
     @Override
-    public void efetuarCadastro(RegistroConta registroConta) throws AccountAlreadyRegisteredException {
-        if(this.checarExistencia(registroConta.getLogin()))
-            throw new AccountAlreadyRegisteredException();
-
-        this.repositorioConta.criarConta(registroConta.getLogin(), registroConta.getSenha());
+    public void efetuarCadastro(Conta conta) throws AccountAlreadyRegisteredException {
+        this.registroConta.efetuarCadastro(conta);
     }
 
     @Override
-    public void efetuarLogin(RegistroConta registroConta) throws AccountNotFoundException {
-        if(!this.checarExistencia(registroConta.getLogin()))
-            throw new AccountNotFoundException();
+    public void efetuarLogin(Conta conta) throws AccountNotFoundException {
 
-        RegistroConta registroContaDoRepositorio = this.pegarConta(registroConta.getLogin());
-        if(!registroContaDoRepositorio.getSenha().equals(registroConta.getSenha()))
-            throw new IllegalArgumentException("Senha incorreta");
     }
 
     @Override
-    public void deletarConta(RegistroConta registroConta) {
-        if(!this.checarExistencia(registroConta.getLogin()))
-            throw new IllegalArgumentException("RegistroConta não existe");
-
-        RegistroConta registroContaDoRepositorio = this.pegarConta(registroConta.getLogin());
-        if(!registroContaDoRepositorio.getSenha().equals(registroConta.getSenha()))
-            throw new IllegalArgumentException("Senha incorreta");
-
-        this.repositorioConta.deletarConta(registroContaDoRepositorio);
-    }
-
-    public List<RegistroConta> getAll() {
-        List<RegistroConta> registroContas = new ArrayList<>(this.repositorioConta.getAll());
-        return registroContas.stream().peek(conta -> {
-            conta.setSenha("");
-            conta.setCarrinho(new Carrinho());
-        }).collect(Collectors.toList());
-    }
-
-    private boolean checarExistencia(String login) {
-        return this.repositorioConta.checarExistencia(login);
-    }
-
-    private RegistroConta pegarConta(String login) {
-        return this.repositorioConta.pegarConta(login);
+    public void deletarConta(Conta conta) {
+        this.registroConta.deletarConta(conta);
     }
 
 }

@@ -6,15 +6,15 @@ import java.util.List;
 
 public interface IRepositorioConta {
 
-    List<RegistroConta> getAll();
+    List<Conta> getAll();
 
     boolean checarExistencia(String login);
 
     void criarConta(String login, String senha);
 
-    RegistroConta pegarConta(String login);
+    Conta pegarConta(String login);
 
     void atualizarCarrinho(String login, Carrinho carrinho);
 
-    void deletarConta(RegistroConta registroConta);
+    void deletarConta(Conta conta);
 }

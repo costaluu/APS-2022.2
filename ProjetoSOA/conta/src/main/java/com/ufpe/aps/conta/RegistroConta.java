@@ -1,27 +1,58 @@
 package com.ufpe.aps.conta;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.ufpe.aps.carrinho.Carrinho;
-import lombok.*;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import com.ufpe.aps.exception.AccountAlreadyRegisteredException;
+import org.springframework.stereotype.Component;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Document(collection = "conta")
-public class RegistroConta {
-    @Id
-    private String login;
+@Component
+public class RegistroConta implements IRegistroConta {
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private String senha;
+    private final IRepositorioConta repositorioConta;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Carrinho carrinho;
+    public RegistroConta(IRepositorioConta repositorioConta) {
+        this.repositorioConta = repositorioConta;
+    }
 
-    public Carrinho pegarCarrinho() {
-        return this.carrinho;
+    @Override
+    public Carrinho pegarCarrinho(String login) {
+        return this.repositorioConta.pegarConta(login).getCarrinho();
+    }
+
+    @Override
+    public void atualizarCarrinho(String login, Carrinho carrinho) {
+        this.repositorioConta.atualizarCarrinho(login, carrinho);
+    }
+
+    @Override
+    public void esvaziarCarrinho(String login) {
+        this.repositorioConta.atualizarCarrinho(login, new Carrinho());
+    }
+
+    @Override
+    public void efetuarCadastro(Conta conta) throws AccountAlreadyRegisteredException {
+        if(this.checarExistencia(conta.getLogin()))
+            throw new AccountAlreadyRegisteredException();
+
+        this.repositorioConta.criarConta(conta.getLogin(), conta.getSenha());
+    }
+
+    @Override
+    public void deletarConta(Conta conta) {
+        if(!this.checarExistencia(conta.getLogin()))
+            throw new IllegalArgumentException("Conta não existe");
+
+        Conta contaDoRepositorio = this.pegarConta(conta.getLogin());
+        if(!contaDoRepositorio.getSenha().equals(conta.getSenha()))
+            throw new IllegalArgumentException("Senha incorreta");
+
+        this.repositorioConta.deletarConta(contaDoRepositorio);
+    }
+
+    private boolean checarExistencia(String login) {
+        return this.repositorioConta.checarExistencia(login);
+    }
+
+    private Conta pegarConta(String login) {
+        return this.repositorioConta.pegarConta(login);
     }
 }

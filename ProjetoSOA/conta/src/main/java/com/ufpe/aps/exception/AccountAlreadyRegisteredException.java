@@ -6,7 +6,7 @@ public class AccountAlreadyRegisteredException extends Exception {
     }
 
     public AccountAlreadyRegisteredException() {
-        super("RegistroConta já cadastrada");
+        super("Conta já cadastrada");
     }
 
     public AccountAlreadyRegisteredException(Throwable cause) {

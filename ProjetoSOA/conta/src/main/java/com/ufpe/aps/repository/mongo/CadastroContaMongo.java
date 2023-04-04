@@ -1,7 +1,7 @@
 package com.ufpe.aps.repository.mongo;
 
 import com.ufpe.aps.carrinho.Carrinho;
-import com.ufpe.aps.conta.RegistroConta;
+import com.ufpe.aps.conta.Conta;
 import com.ufpe.aps.conta.IRepositorioConta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -26,36 +26,36 @@ public class CadastroContaMongo implements IRepositorioConta {
     }
 
     @Override
-    public List<RegistroConta> getAll() {
+    public List<Conta> getAll() {
         return this.contaMongoRepository.findAll();
     }
 
     @Override
     public boolean checarExistencia(String login) {
-        Optional<RegistroConta> conta = this.contaMongoRepository.findById(login);
+        Optional<Conta> conta = this.contaMongoRepository.findById(login);
         return conta.isPresent();
     }
 
     @Override
     public void criarConta(String login, String senha) {
-        this.contaMongoRepository.save(new RegistroConta(login, senha, new Carrinho()));
+        this.contaMongoRepository.save(new Conta(login, senha, new Carrinho()));
     }
 
     @Override
-    public RegistroConta pegarConta(String login) {
-        Optional<RegistroConta> conta = this.contaMongoRepository.findById(login);
+    public Conta pegarConta(String login) {
+        Optional<Conta> conta = this.contaMongoRepository.findById(login);
         return conta.orElse(null);
     }
 
     @Override
     public void atualizarCarrinho(String login, Carrinho carrinho) {
-        RegistroConta registroConta = pegarConta(login);
-        registroConta.setCarrinho(carrinho);
-        this.contaMongoRepository.save(registroConta);
+        Conta conta = pegarConta(login);
+        conta.setCarrinho(carrinho);
+        this.contaMongoRepository.save(conta);
     }
 
     @Override
-    public void deletarConta(RegistroConta registroConta) {
+    public void deletarConta(Conta conta) {
 
     }
 }

@@ -12,7 +12,7 @@
 	<groupId>com.ufpe</groupId>
 	<artifactId>aps</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ecommerce-registroConta</name>
+	<name>ecommerce-conta</name>
 	<description>ECommerce para a disciplina de APS da UFPE</description>
 	<properties>
 		<java.version>11</java.version>
