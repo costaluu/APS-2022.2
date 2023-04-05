@@ -1,6 +1,21 @@
 spring:
   application:
     name: conta-acesso
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017
+      database: ecommerce
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ecommerce
+    username: postgres
+    password: Postgres2023!
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
 
 eureka:
   client:
@@ -21,10 +36,7 @@ produto:
 # mongo ou inmemory
 fabrica:
   repositorios:
-    choice: inmemory
-
-#spring.data.mongodb.uri=mongodb://localhost:27017
-#spring.data.mongodb.database=ecommerce
+    choice: bdr
 
 #logging
 logging:

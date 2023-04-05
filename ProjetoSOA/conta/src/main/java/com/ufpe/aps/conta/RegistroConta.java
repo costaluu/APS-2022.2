@@ -2,7 +2,10 @@ package com.ufpe.aps.conta;
 
 import com.ufpe.aps.carrinho.Carrinho;
 import com.ufpe.aps.exception.AccountAlreadyRegisteredException;
+import com.ufpe.aps.exception.AccountNotFoundException;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class RegistroConta implements IRegistroConta {
@@ -14,17 +17,17 @@ public class RegistroConta implements IRegistroConta {
     }
 
     @Override
-    public Carrinho pegarCarrinho(String login) {
+    public Carrinho pegarCarrinho(String login) throws AccountNotFoundException {
         return this.repositorioConta.pegarConta(login).getCarrinho();
     }
 
     @Override
-    public void atualizarCarrinho(String login, Carrinho carrinho) {
+    public void atualizarCarrinho(String login, Carrinho carrinho) throws AccountNotFoundException {
         this.repositorioConta.atualizarCarrinho(login, carrinho);
     }
 
     @Override
-    public void esvaziarCarrinho(String login) {
+    public void esvaziarCarrinho(String login) throws AccountNotFoundException {
         this.repositorioConta.atualizarCarrinho(login, new Carrinho());
     }
 
@@ -37,22 +40,20 @@ public class RegistroConta implements IRegistroConta {
     }
 
     @Override
-    public void deletarConta(Conta conta) {
-        if(!this.checarExistencia(conta.getLogin()))
-            throw new IllegalArgumentException("Conta não existe");
-
-        Conta contaDoRepositorio = this.pegarConta(conta.getLogin());
-        if(!contaDoRepositorio.getSenha().equals(conta.getSenha()))
-            throw new IllegalArgumentException("Senha incorreta");
-
-        this.repositorioConta.deletarConta(contaDoRepositorio);
+    public void deletarConta(Conta conta) throws AccountNotFoundException {
+        this.repositorioConta.deletarConta(conta);
     }
 
     private boolean checarExistencia(String login) {
         return this.repositorioConta.checarExistencia(login);
     }
 
-    private Conta pegarConta(String login) {
+    public Conta pegarConta(String login) throws AccountNotFoundException {
         return this.repositorioConta.pegarConta(login);
+    }
+
+    @Override
+    public List<Conta> getAll() {
+        return this.repositorioConta.getAll();
     }
 }

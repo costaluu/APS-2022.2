@@ -1,7 +1,5 @@
 package com.ufpe.aps;
 
-import com.ufpe.aps.gui.*;
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 //@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)

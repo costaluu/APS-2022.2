@@ -36,7 +36,7 @@ public class ControleProduto {
                     )
                     .retrieve()
                     .bodyToMono(Produto.class), throwable -> {
-                        throw new ServerErrorException("Api de produtos não respondeu");
+                        throw new ServerErrorException("Erro ao pegar produto", throwable);
                     })
                 .block();
     }

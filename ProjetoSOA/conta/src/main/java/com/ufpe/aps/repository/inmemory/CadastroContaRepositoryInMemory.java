@@ -4,6 +4,7 @@ import com.ufpe.aps.carrinho.Carrinho;
 import com.ufpe.aps.conta.Conta;
 import com.ufpe.aps.conta.IRepositorioConta;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,23 +20,23 @@ public class CadastroContaRepositoryInMemory implements IRepositorioConta {
             return instance;
         }
 
-        private Map<String, Conta> contas;
+        private final List<Conta> contas;
 
         public CadastroContaRepositoryInMemory() {
-            contas = new HashMap<>();
-            contas.put("teste1", new Conta("teste1", "teste1", new Carrinho()));
-            contas.put("teste2", new Conta("teste2", "teste2", new Carrinho()));
+            contas = new ArrayList<>();
+            contas.add(new Conta("teste1", "teste1", new Carrinho()));
+            contas.add(new Conta("teste2", "teste2", new Carrinho()));
             System.out.println("Contas criadas: " + contas.size());
         }
 
         @Override
         public List<Conta> getAll() {
-            return List.copyOf(contas.values());
+            return List.copyOf(contas);
         }
 
         @Override
         public boolean checarExistencia(String login) {
-            return contas.get(login) != null;
+            return contas.stream().anyMatch(conta -> conta.getLogin().equals(login));
         }
 
         @Override
@@ -44,25 +45,24 @@ public class CadastroContaRepositoryInMemory implements IRepositorioConta {
             conta.setLogin(login);
             conta.setSenha(senha);
             conta.setCarrinho(new Carrinho());
-            contas.put(login, conta);
+            contas.add(conta);
         }
 
         @Override
         public Conta pegarConta(String login) {
-            return contas.get(login);
+            return contas.stream().filter(conta -> conta.getLogin().equals(login)).findFirst().orElse(null);
         }
 
         @Override
         public void atualizarCarrinho(String login, Carrinho carrinho) {
             Conta conta = pegarConta(login);
             conta.setCarrinho(carrinho);
-            contas.remove(login);
-            contas.put(login, conta);
+            contas.stream().filter(conta1 -> conta1.getLogin().equals(login)).findFirst().ifPresent(conta1 -> conta1.setCarrinho(carrinho));
         }
 
     @Override
     public void deletarConta(Conta conta) {
-        contas.remove(conta.getLogin());
+        contas.stream().filter(conta1 -> conta1.getLogin().equals(conta.getLogin())).findFirst().ifPresent(contas::remove);
     }
 
 }

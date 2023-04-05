@@ -1,6 +1,7 @@
 package com.ufpe.aps.conta;
 
 import com.ufpe.aps.carrinho.Carrinho;
+import com.ufpe.aps.exception.AccountNotFoundException;
 
 import java.util.List;
 
@@ -12,9 +13,9 @@ public interface IRepositorioConta {
 
     void criarConta(String login, String senha);
 
-    Conta pegarConta(String login);
+    Conta pegarConta(String login) throws AccountNotFoundException;
 
-    void atualizarCarrinho(String login, Carrinho carrinho);
+    void atualizarCarrinho(String login, Carrinho carrinho) throws AccountNotFoundException;
 
     void deletarConta(Conta conta);
 }

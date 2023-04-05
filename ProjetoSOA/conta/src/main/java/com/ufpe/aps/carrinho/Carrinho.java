@@ -17,19 +17,15 @@ public class Carrinho {
         this.produtos = new HashMap<>();
     }
 
-    public void esvaziarCarrinho(){
-        this.produtos.clear();
-    }
-
-    public void addProduto(ProdutoParaCarrinho produto){
-        if(this.produtos.containsKey(produto.getProduto().getId())){
-            ProdutoParaCarrinho produtoParaCarrinho = this.produtos.get(produto.getProduto().getId());
-            produtoParaCarrinho.setQuantidade(produtoParaCarrinho.getQuantidade() + produto.getQuantidade());
-            this.produtos.remove(produto.getProduto().getId());
-            this.produtos.put(produto.getProduto().getId(), produtoParaCarrinho);
-        }else {
-            this.produtos.put(produto.getProduto().getId(), produto);
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Carrinho{");
+        for (Map.Entry<String, ProdutoParaCarrinho> entry: produtos.entrySet()) {
+            sb.append(entry.getValue().toString());
         }
+        sb.append("}");
+        return sb.toString();
     }
 
 }

@@ -19,4 +19,12 @@ public class ProdutoParaCarrinho {
         produtoParaCarrinho.setQuantidade(quantidade);
         return produtoParaCarrinho;
     }
+
+    @Override
+    public String toString() {
+        return "ProdutoParaCarrinho{" +
+                "produto=" + produto.toString() +
+                ", quantidade=" + quantidade +
+                '}';
+    }
 }

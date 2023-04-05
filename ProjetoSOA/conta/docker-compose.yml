@@ -6,6 +6,7 @@ services:
     image: postgres
     environment:
       POSTGRES_PASSWORD: "Postgres2023!"
+      POSTGRES_DB: "ecommerce"
     ports:
       - "5432:5432"
 
