@@ -1,12 +1,13 @@
 spring:
   application:
-    name: conta-acesso
+    name: conta
+
   data:
     mongodb:
       uri: mongodb://localhost:27017
       database: ecommerce
   datasource:
-    url: jdbc:postgresql://localhost:5432/ecommerce
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/ecommerce}
     username: postgres
     password: Postgres2023!
 

@@ -2,14 +2,50 @@ version: '3.9'
 
 services:
 
-  conta:
+  discovery-server:
+    container_name: discovery-server
     build: 
-      context: ./conta-acesso
+      context: ./discovery-server
     ports:
-      - "8083:8083"
+      - "8761:8761"
 
-  produto:
+  postgres-db:
+    container_name: postgres-db
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Postgres2023!
+      POSTGRES_DB: ecommerce
+
+  gateway:
+    container_name: api-gateway
     build: 
-      context: ./produto
+      context: ./gateway
     ports:
-      - "8084:8084"
+      - "8080:8080"
+    environment:
+      EUREKA_SERVER_URL: http://discovery-server:8761/eureka/
+    depends_on:
+      - discovery-server
+
+  conta:
+    container_name: conta
+    build: 
+      context: ./conta
+    environment:
+      DB_URL: jdbc:postgresql://postgres-db:5432/ecommerce
+      EUREKA_SERVER_URL: http://discovery-server:8761/eureka/
+    depends_on:
+      - discovery-server
+      - postgres-db
+
+  # produto:
+  #   container_name: produto
+  #   build: 
+  #     context: ./produto
+  #   environment:
+  #     DB_URL: jdbc:postgresql://postgres-db:5432/ecommerce
+  #     EUREKA_SERVER_URL: http://discovery-server:8761/eureka/
+  #   depends_on:
+  #     - discovery-server
+  #     - postgres-db
