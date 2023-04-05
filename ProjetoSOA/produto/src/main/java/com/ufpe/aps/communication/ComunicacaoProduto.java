@@ -5,9 +5,13 @@ import com.ufpe.aps.exception.IsNotOwnerOfProductException;
 import com.ufpe.aps.exception.ProdutoNotFoundException;
 import com.ufpe.aps.exception.QuantidadeProdutoException;
 import com.ufpe.aps.pojo.AvaliacaoDTO;
+import com.ufpe.aps.produto.FachadaProduto;
 import com.ufpe.aps.produto.Produto;
 import com.ufpe.aps.produto.ServicoProduto;
+import com.ufpe.aps.repository.bdr.ProdutoDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,32 +22,30 @@ import java.util.List;
 @RequestMapping("${produto.servlet.path}")
 public class ComunicacaoProduto {
 
-    private final ServicoProduto servicoProduto;
+    @Value("${produto.api-key}")
+    private String apiKey;
+
+    private final FachadaProduto fachadaProduto;
 
     @Autowired
-    public ComunicacaoProduto(ServicoProduto servicoProduto) {
-        this.servicoProduto = servicoProduto;
+    public ComunicacaoProduto(Environment env, ProdutoDAO repository) {
+        this.fachadaProduto = new FachadaProduto(env, repository);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Produto>> getAllProdutos() {
+        return ResponseEntity.ok(fachadaProduto.pegarTodosProdutos());
     }
 
     @GetMapping("/{login}")
     public ResponseEntity<List<Produto>> getAllProdutos(@PathVariable String login) {
-        return ResponseEntity.ok(servicoProduto.meusProdutos(login));
+        return ResponseEntity.ok(fachadaProduto.meusProdutos(login));
     }
-//
-//    @GetMapping("/{id}")
-//    public ResponseEntity<Produto> getProdutoById(@PathVariable("id") String id,
-//                                                  @RequestParam Integer quantidade)
-//            throws ProdutoNotFoundException, QuantidadeProdutoException {
-//        if(quantidade == null || quantidade <= 0)
-//            throw new QuantidadeProdutoException("Quantidade do produto inválida ou não informada");
-//
-//        return ResponseEntity.ok(controladorProduto.pegarProduto(id, quantidade));
-//    }
 
     @PostMapping("/publicar")
     public ResponseEntity<Produto> publicarProduto(@RequestBody Produto produto) {
         try{
-            servicoProduto.publicarItem(produto);
+            fachadaProduto.publicarItem(produto);
             return ResponseEntity.ok(produto);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
@@ -55,7 +57,7 @@ public class ComunicacaoProduto {
         if (login == null || login.isEmpty())
             throw new IllegalArgumentException("Login não informado");
 
-        servicoProduto.excluirProduto(login, idProduto);
+        fachadaProduto.excluirProduto(login, idProduto);
         return ResponseEntity.noContent().build();
 
     }
@@ -65,17 +67,18 @@ public class ComunicacaoProduto {
         if (avaliacaoDTO == null || avaliacaoDTO.getLogin().isEmpty() || avaliacaoDTO.getIdProduto().isEmpty() || avaliacaoDTO.getAvaliacao().isEmpty())
             throw new IllegalArgumentException("Login não informado");
 
-        servicoProduto.avaliar(avaliacaoDTO.getLogin(), avaliacaoDTO.getIdProduto(), avaliacaoDTO.getAvaliacao());
+        fachadaProduto.avaliar(avaliacaoDTO.getLogin(), avaliacaoDTO.getIdProduto(), avaliacaoDTO.getAvaliacao());
         return ResponseEntity.noContent().build();
     }
 
-//    @PostMapping("/atualiza-estoque")
-//    public ResponseEntity<Void> atualizaEstoque(@RequestBody Carrinho carrinho) {
-//        try{
-//            servicoProduto.atualizaEstoque(carrinho);
-//            return ResponseEntity.noContent().build();
-//        } catch (Exception e) {
-//            return ResponseEntity.internalServerError().build();
-//        }
-//    }
+    @PostMapping("/atualiza-estoque")
+    public ResponseEntity<Void> atualizaEstoque(@RequestHeader("X-API-KEY") String apiKey, @RequestBody Carrinho carrinho) {
+        if(apiKey == null || apiKey.isEmpty())
+            throw new IllegalArgumentException("API KEY não informada");
+        if(!apiKey.equals(this.apiKey))
+            throw new IllegalArgumentException("API KEY inválida");
+
+        fachadaProduto.atualizarEstoque(carrinho);
+        return ResponseEntity.noContent().build();
+    }
 }

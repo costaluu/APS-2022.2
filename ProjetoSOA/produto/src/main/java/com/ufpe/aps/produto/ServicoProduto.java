@@ -14,12 +14,14 @@ public class ServicoProduto implements IServicoProduto {
 
     private final IRegistroProduto registroProduto;
 
-    public ServicoProduto(Environment env, ProdutoDAO repository) {
-        String choice = env.getProperty("fabrica.repositorios.choice") != null ? env.getProperty("fabrica.repositorios.choice") : "INMEMORY";
-        assert choice != null;
-        IRepositorioProduto repo = choice.equalsIgnoreCase("bdr") ?
-                new FabricaRepositorioBDR(repository).criarRepositorioProduto() : new FabricaRepositoriosInMemory().criarRepositorioProduto();
-        this.registroProduto = new RegistroProduto(repo);
+    public ServicoProduto(IRegistroProduto registroProduto) {
+        this.registroProduto = registroProduto;
+
+//        String choice = env.getProperty("fabrica.repositorios.choice") != null ? env.getProperty("fabrica.repositorios.choice") : "INMEMORY";
+//        assert choice != null;
+//        IRepositorioProduto repo = choice.equalsIgnoreCase("bdr") ?
+//                new FabricaRepositorioBDR(repository).criarRepositorioProduto() : new FabricaRepositoriosInMemory().criarRepositorioProduto();
+//        this.registroProduto = new RegistroProduto(repo);
     }
 
     @Override

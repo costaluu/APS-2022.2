@@ -15,13 +15,8 @@ public class ServicoConta implements IServicoConta {
 
     private final IRegistroConta registroConta;
 
-    public ServicoConta(Environment env, ContaDAO repository) {
-//        this.registroConta = registroConta;
-        String choice = env.getProperty("fabrica.repositorios.choice") != null ? env.getProperty("fabrica.repositorios.choice") : "INMEMORY";
-        assert choice != null;
-        IRepositorioConta repo = choice.equalsIgnoreCase("bdr") ?
-                new FabricaRepositorioBDR(repository).criarRepositorioConta() : new FabricaRepositoriosInMemory().criarRepositorioConta();
-        this.registroConta = new RegistroConta(repo);
+    public ServicoConta(IRegistroConta registroConta) {
+        this.registroConta = registroConta;
     }
 
     @Override
