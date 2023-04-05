@@ -14,4 +14,8 @@ public interface IRepositorioProduto {
     void atualizaEstoquesProdutos(Carrinho carrinho);
 
     List<Produto> pegarTodosProdutos();
+
+    void deletarProduto(String idProduto);
+
+    void atualizarAvaliacao(String idProduto, String avaliacao);
 }

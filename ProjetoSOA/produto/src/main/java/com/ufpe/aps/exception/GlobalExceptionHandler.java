@@ -24,4 +24,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 new ExceptionDTO(HttpStatus.BAD_REQUEST, e.getMessage())
         );
     }
+
+    @ExceptionHandler(IsNotOwnerOfProductException.class)
+    public ResponseEntity<ExceptionDTO> isNotOwnerOfProductException(IsNotOwnerOfProductException e){
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(
+                new ExceptionDTO(HttpStatus.FORBIDDEN, e.getMessage())
+        );
+    }
 }

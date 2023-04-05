@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class CadastroProdutoRepositoryInMemory implements IRepositorioProduto {
 
-    private Map<String, Produto> produtos;
+    private final List<Produto> produtos;
 
     private static CadastroProdutoRepositoryInMemory instance;
 
@@ -24,51 +24,60 @@ public class CadastroProdutoRepositoryInMemory implements IRepositorioProduto {
     }
 
     public CadastroProdutoRepositoryInMemory() {
-        produtos = new HashMap<>();
-        produtos.put("1", new Produto("1", "Teste1", "Descrição 1" , "Categoria 1", 10, 10.0));
-        produtos.put("2", new Produto("2", "Teste1", "Descrição 2" , "Categoria 2", 10, 10.0));
-        produtos.put("3", new Produto("3", "Teste1", "Descrição 3" , "Categoria 3", 10, 10.0));
-        produtos.put("4", new Produto("4", "Teste1", "Descrição 4" , "Categoria 4", 10, 10.0));
-        produtos.put("5", new Produto("5", "Teste1", "Descrição 5" , "Categoria 5", 10, 10.0));
-        produtos.put("6", new Produto("6", "Teste1", "Descrição 6" , "Categoria 6", 10, 10.0));
-        produtos.put("7", new Produto("7", "Teste1", "Descrição 7" , "Categoria 7", 10, 10.0));
-        produtos.put("8", new Produto("8", "Teste1", "Descrição 8" , "Categoria 8", 10, 10.0));
-        produtos.put("9", new Produto("9", "Teste1", "Descrição 9" , "Categoria 9", 10, 10.0));
-        produtos.put("10", new Produto("10", "Teste1", "Descrição 10" , "Categoria 10", 10, 10.0));
+        produtos = new ArrayList<>();
+        produtos.add(new Produto("1", "Teste1", "Descrição 1" , "Categoria 1", 10, 10.0, ""));
+        produtos.add(new Produto("2", "Teste1", "Descrição 2" , "Categoria 2", 10, 10.0, ""));
+        produtos.add(new Produto("3", "Teste1", "Descrição 3" , "Categoria 3", 10, 10.0, ""));
+        produtos.add(new Produto("4", "Teste1", "Descrição 4" , "Categoria 4", 10, 10.0, ""));
+        produtos.add(new Produto("5", "Teste1", "Descrição 5" , "Categoria 5", 10, 10.0, ""));
+        produtos.add(new Produto("6", "Teste1", "Descrição 6" , "Categoria 6", 10, 10.0, ""));
+        produtos.add(new Produto("7", "Teste1", "Descrição 7" , "Categoria 7", 10, 10.0, ""));
+        produtos.add(new Produto("8", "Teste1", "Descrição 8" , "Categoria 8", 10, 10.0, ""));
+        produtos.add(new Produto("9", "Teste1", "Descrição 9" , "Categoria 9", 10, 10.0, ""));
+        produtos.add(new Produto("10", "Teste1", "Descrição 10" , "Categoria 10", 10, 10.0, ""));
         System.out.println("Produtos criados: " + produtos.size());
     }
 
     @Override
     public void addAoEstoque(Produto produto) {
-        produtos.put(produto.getId(), produto);
+        produtos.add(produto);
     }
 
     @Override
     public Produto pegarProduto(String idProduto, Integer quantidade) {
-        if(!produtos.containsKey(idProduto))
-            return null;
-        return produtos.get(idProduto);
+        return produtos.stream().filter(p -> p.getId().equals(idProduto) && p.getTotalUnidades() >= quantidade).findFirst().orElse(null);
     }
 
     @Override
     public Produto pegarProduto(String idProduto) {
-        if(!produtos.containsKey(idProduto))
-            return null;
-        return produtos.get(idProduto);
+        return produtos.stream().filter(p -> p.getId().equals(idProduto)).findFirst().orElse(null);
     }
 
     @Override
     public void atualizaEstoquesProdutos(Carrinho carrinho) {
         for(ProdutoParaCarrinho elem : carrinho.getProdutos().values()){
-            Produto produto = produtos.get(elem.getProduto().getId());
+            Produto produto = pegarProduto(elem.getProduto().getId());
             produto.setTotalUnidades(produto.getTotalUnidades() - elem.getQuantidade());
-            produtos.remove(produto.getId());
-            produtos.put(produto.getId(), produto);
+            produtos.stream().filter(p -> p.getId().equals(produto.getId()))
+                    .findFirst()
+                    .ifPresent(p -> p.setTotalUnidades(p.getTotalUnidades() - produto.getTotalUnidades()));
         }
     }
 
     @Override
     public List<Produto> pegarTodosProdutos() {
-        return new ArrayList<>(produtos.values());
+        return List.copyOf(produtos);
+    }
+
+    @Override
+    public void deletarProduto(String idProduto) {
+        produtos.removeIf(p -> p.getId().equals(idProduto));
+    }
+
+    @Override
+    public void atualizarAvaliacao(String idProduto, String avaliacao) {
+        produtos.stream().filter(p -> p.getId().equals(idProduto))
+                .findFirst()
+                .ifPresent(p -> p.setAvaliacao(avaliacao));
     }
 }

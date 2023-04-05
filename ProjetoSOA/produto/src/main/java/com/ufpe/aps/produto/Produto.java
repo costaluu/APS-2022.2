@@ -1,20 +1,22 @@
 package com.ufpe.aps.produto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.stereotype.Component;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "produto")
+@Entity
+@Table(name = "produto")
 public class Produto {
+
+    @Id
     private String id;
 
     private String dono;
@@ -26,4 +28,6 @@ public class Produto {
     private Integer totalUnidades;
 
     private Double valor;
+
+    private String avaliacao;
 }
