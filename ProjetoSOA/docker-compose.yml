@@ -39,13 +39,24 @@ services:
       - discovery-server
       - postgres-db
 
-  # produto:
-  #   container_name: produto
-  #   build: 
-  #     context: ./produto
-  #   environment:
-  #     DB_URL: jdbc:postgresql://postgres-db:5432/ecommerce
-  #     EUREKA_SERVER_URL: http://discovery-server:8761/eureka/
-  #   depends_on:
-  #     - discovery-server
-  #     - postgres-db
+  produto:
+    container_name: produto
+    build: 
+      context: ./produto
+    environment:
+      DB_URL: jdbc:postgresql://postgres-db:5432/ecommerce
+      EUREKA_SERVER_URL: http://discovery-server:8761/eureka/
+    depends_on:
+      - discovery-server
+      - postgres-db
+
+  carrinho:
+    container_name: carrinho
+    build: 
+      context: ./carrinho
+    environment:
+      DB_URL: jdbc:postgresql://postgres-db:5432/ecommerce
+      EUREKA_SERVER_URL: http://discovery-server:8761/eureka/
+    depends_on:
+      - discovery-server
+      - postgres-db
