@@ -37,8 +37,13 @@ public class ComunicacaoProduto {
         return ResponseEntity.ok(fachadaProduto.pegarTodosProdutos());
     }
 
-    @GetMapping("/{login}")
-    public ResponseEntity<List<Produto>> getAllProdutos(@PathVariable String login) {
+    @GetMapping("/{id}")
+    public ResponseEntity<Produto> getProduto(@PathVariable("id") String idProduto, @RequestParam int quantidade) throws ProdutoNotFoundException {
+        return ResponseEntity.ok(fachadaProduto.pegarProduto(idProduto, quantidade));
+    }
+
+    @GetMapping("/meus-produtos/{login}")
+    public ResponseEntity<List<Produto>> getAllMyProdutos(@PathVariable String login) {
         return ResponseEntity.ok(fachadaProduto.meusProdutos(login));
     }
 
@@ -53,7 +58,7 @@ public class ComunicacaoProduto {
     }
 
     @DeleteMapping("/{idProduto}")
-    public ResponseEntity<Void> deletarProduto(@RequestParam String login, @PathVariable("id") String idProduto) throws IsNotOwnerOfProductException {
+    public ResponseEntity<Void> deletarProduto(@RequestParam String login, @PathVariable("idProduto") String idProduto) throws IsNotOwnerOfProductException {
         if (login == null || login.isEmpty())
             throw new IllegalArgumentException("Login não informado");
 
@@ -64,12 +69,17 @@ public class ComunicacaoProduto {
 
     @PostMapping("/avaliar")
     public ResponseEntity<Void> avaliarProduto(AvaliacaoDTO avaliacaoDTO) {
-        if (avaliacaoDTO == null || avaliacaoDTO.getLogin().isEmpty() || avaliacaoDTO.getIdProduto().isEmpty() || avaliacaoDTO.getAvaliacao().isEmpty())
+        if (avaliacaoDTO == null || avaliacaoDTO.getLogin().isEmpty() || avaliacaoDTO.getIdProduto().isEmpty() || avaliacaoDTO.getAvaliacao() == null)
             throw new IllegalArgumentException("Login não informado");
+
+        if(avaliacaoDTO.getAvaliacao() < 0 || avaliacaoDTO.getAvaliacao() > 5)
+            throw new IllegalArgumentException("Avaliação deve estar entre 0 e 5");
 
         fachadaProduto.avaliar(avaliacaoDTO.getLogin(), avaliacaoDTO.getIdProduto(), avaliacaoDTO.getAvaliacao());
         return ResponseEntity.noContent().build();
     }
+
+
 
     @PostMapping("/atualiza-estoque")
     public ResponseEntity<Void> atualizaEstoque(@RequestHeader("X-API-KEY") String apiKey, @RequestBody Carrinho carrinho) {

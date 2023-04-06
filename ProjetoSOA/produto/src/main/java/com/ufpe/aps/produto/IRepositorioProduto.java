@@ -15,7 +15,9 @@ public interface IRepositorioProduto {
 
     List<Produto> pegarTodosProdutos();
 
+    List<Produto> pegarMeusProdutos(String login);
+
     void deletarProduto(String idProduto);
 
-    void atualizarAvaliacao(String idProduto, String avaliacao);
+    void atualizarAvaliacao(String idProduto, Float avaliacao);
 }

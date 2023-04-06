@@ -26,7 +26,12 @@ public class ServicoProduto implements IServicoProduto {
 
     @Override
     public List<Produto> meusProdutos(String login) {
-        return registroProduto.pegarTodosProdutos(login);
+        return registroProduto.pegarMeusProdutos(login);
+    }
+
+    @Override
+    public List<Produto> pegarTodosProdutos() {
+        return registroProduto.pegarTodosProdutos();
     }
 
     @Override
@@ -43,7 +48,11 @@ public class ServicoProduto implements IServicoProduto {
     }
 
     @Override
-    public void avaliar(String login, String idProduto, String avaliacao) {
-        registroProduto.atualizarAvaliacao(idProduto, avaliacao);
+    public void avaliar(String login, String idProduto, Integer avaliacao) {
+        Produto produto = registroProduto.pegarProduto(idProduto, 1);
+
+        float novaAvaliacao = (produto.getAvaliacao() * produto.getQtdAvaliacoes() + avaliacao) / (produto.getQtdAvaliacoes() + 1);
+
+        registroProduto.atualizarAvaliacao(idProduto, novaAvaliacao);
     }
 }

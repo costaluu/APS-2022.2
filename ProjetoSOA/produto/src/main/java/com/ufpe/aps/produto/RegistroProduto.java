@@ -36,12 +36,17 @@ public class RegistroProduto implements IRegistroProduto {
     }
 
     @Override
-    public void atualizarAvaliacao(String idProduto, String avaliacao) {
+    public void atualizarAvaliacao(String idProduto, Float avaliacao) {
         repositorioProduto.atualizarAvaliacao(idProduto, avaliacao);
     }
 
     @Override
-    public List<Produto> pegarTodosProdutos(String login) {
+    public List<Produto> pegarTodosProdutos() {
         return repositorioProduto.pegarTodosProdutos();
+    }
+
+    @Override
+    public List<Produto> pegarMeusProdutos(String login) {
+        return repositorioProduto.pegarMeusProdutos(login);
     }
 }

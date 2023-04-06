@@ -24,15 +24,5 @@ public class Produto {
 
     private Double valor;
 
-    @Override
-    public String toString() {
-        return "Produto{" +
-                "id='" + id + '\'' +
-                ", dono='" + dono + '\'' +
-                ", nome='" + nome + '\'' +
-                ", descricao='" + descricao + '\'' +
-                ", totalUnidades=" + totalUnidades +
-                ", valor=" + valor +
-                '}';
-    }
+    private Integer avaliacao;
 }

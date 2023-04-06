@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IRegistroProduto {
 
-    Produto pegarProduto(String id, int quantidade);
+    Produto pegarProduto(String idProduto, int quantidade);
 
     void atualizarEstoque(Carrinho carrinho);
 
@@ -14,9 +14,7 @@ public interface IRegistroProduto {
 
     void deletarProduto(String idProduto);
 
-    void atualizarAvaliacao(String idProduto, Float avaliacao);
+    void atualizarAvaliacao(String idProduto, String avaliacao);
 
-    List<Produto> pegarTodosProdutos();
-
-    List<Produto> pegarMeusProdutos(String login);
+    List<Produto> pegarTodosProdutos(String login);
 }

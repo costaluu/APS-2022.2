@@ -1,12 +1,11 @@
 package com.ufpe.aps.produto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
@@ -29,5 +28,8 @@ public class Produto {
 
     private Double valor;
 
-    private String avaliacao;
+    private Float avaliacao;
+
+    @JsonIgnore(JsonInclude.Include.NON_NULL)
+    private Integer qtdAvaliacoes;
 }

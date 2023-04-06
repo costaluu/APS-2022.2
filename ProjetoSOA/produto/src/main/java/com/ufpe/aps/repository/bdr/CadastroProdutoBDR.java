@@ -48,12 +48,17 @@ public class CadastroProdutoBDR implements IRepositorioProduto {
     }
 
     @Override
+    public List<Produto> pegarMeusProdutos(String login) {
+        return produtoDAO.findByDono(login);
+    }
+
+    @Override
     public void deletarProduto(String idProduto) {
         produtoDAO.deleteById(idProduto);
     }
 
     @Override
-    public void atualizarAvaliacao(String idProduto, String avaliacao) {
+    public void atualizarAvaliacao(String idProduto, Float avaliacao) {
         Produto produto = pegarProduto(idProduto);
         produto.setAvaliacao(avaliacao);
         produtoDAO.save(produto);

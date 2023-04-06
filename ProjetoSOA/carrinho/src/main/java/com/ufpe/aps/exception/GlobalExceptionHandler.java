@@ -26,7 +26,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         );
     }
 
-    @ExceptionHandler(AccountNotFoundException.class)
+    @ExceptionHandler({AccountNotFoundException.class, ProdutoNotFoundException.class})
     public ResponseEntity<ExceptionDTO> accountNotFound(AccountNotFoundException e){
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(

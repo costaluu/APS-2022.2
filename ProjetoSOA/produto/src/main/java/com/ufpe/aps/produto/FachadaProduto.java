@@ -9,7 +9,7 @@ import org.springframework.core.env.Environment;
 
 import java.util.List;
 
-public class FachadaProduto implements IRegistroProduto, IServicoProduto {
+public class FachadaProduto {
 
     private final IRegistroProduto registroProduto;
 
@@ -28,57 +28,35 @@ public class FachadaProduto implements IRegistroProduto, IServicoProduto {
     }
 
 
-    @Override
     public Produto pegarProduto(String id, int quantidade) {
         return this.registroProduto.pegarProduto(id, quantidade);
     }
 
-    @Override
     public void atualizarEstoque(Carrinho carrinho) {
         this.registroProduto.atualizarEstoque(carrinho);
     }
 
-    @Override
     public void criarProduto(String login, Produto produto, int quantidade) {
         this.registroProduto.criarProduto(login, produto, quantidade);
     }
 
-    @Override
-    public void deletarProduto(String idProduto) {
-        this.registroProduto.deletarProduto(idProduto);
-    }
-
-    @Override
-    public void atualizarAvaliacao(String idProduto, String avaliacao) {
-        this.registroProduto.atualizarAvaliacao(idProduto, avaliacao);
-    }
-
-    @Override
-    public List<Produto> pegarTodosProdutos(String login) {
-        return this.registroProduto.pegarTodosProdutos(login);
-    }
-
-    @Override
     public List<Produto> meusProdutos(String login) {
         return this.servicoProduto.meusProdutos(login);
     }
 
-    @Override
     public void publicarItem(Produto produto) {
         this.servicoProduto.publicarItem(produto);
     }
 
-    @Override
     public void excluirProduto(String login, String idProduto) throws IsNotOwnerOfProductException {
         this.servicoProduto.excluirProduto(login, idProduto);
     }
 
-    @Override
-    public void avaliar(String login, String idProduto, String avaliacao) {
+    public void avaliar(String login, String idProduto, Integer avaliacao) {
         this.servicoProduto.avaliar(login, idProduto, avaliacao);
     }
 
     public List<Produto> pegarTodosProdutos() {
-        return this.repository.findAll();
+        return this.servicoProduto.pegarTodosProdutos();
     }
 }
