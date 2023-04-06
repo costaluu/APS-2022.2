@@ -1,0 +1,854 @@
+{
+	"info": {
+		"_postman_id": "0a378626-f18f-489e-befb-9c96137778ea",
+		"name": "APS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19386391"
+	},
+	"item": [
+		{
+			"name": "Produto",
+			"item": [
+				{
+					"name": "Get All Produtos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUri}}/produto",
+							"host": [
+								"{{baseUri}}"
+							],
+							"path": [
+								"produto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Produtos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUri}}/produto/meus-produtos/Teste3",
+							"host": [
+								"{{baseUri}}"
+							],
+							"path": [
+								"produto",
+								"meus-produtos",
+								"Teste3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Produto",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUri}}/produto/2?login=Teste3",
+							"host": [
+								"{{baseUri}}"
+							],
+							"path": [
+								"produto",
+								"2"
+							],
+							"query": [
+								{
+									"key": "login",
+									"value": "Teste3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Produto By id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUri}}/produto/1?quantidade=1",
+							"host": [
+								"{{baseUri}}"
+							],
+							"path": [
+								"produto",
+								"1"
+							],
+							"query": [
+								{
+									"key": "quantidade",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Produto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"2\",\r\n    \"dono\": \"Teste3\",\r\n    \"nome\": \"Óleo de cozinha\",\r\n    \"descricao\": \"Óleo para cozinhar\",\r\n    \"totalUnidades\": 100,\r\n    \"valor\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUri}}/produto/publicar",
+							"host": [
+								"{{baseUri}}"
+							],
+							"path": [
+								"produto",
+								"publicar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Avaliar Produto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"2\",\r\n    \"dono\": \"Teste3\",\r\n    \"nome\": \"Óleo de cozinha\",\r\n    \"descricao\": \"Óleo para cozinhar\",\r\n    \"totalUnidades\": 100,\r\n    \"valor\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUri}}/produto/publicar",
+							"host": [
+								"{{baseUri}}"
+							],
+							"path": [
+								"produto",
+								"publicar"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"baseUri\", \"http://localhost:8084\")"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Conta",
+			"item": [
+				{
+					"name": "Get All Contas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUri}}/conta",
+							"host": [
+								"{{baseUri}}"
+							],
+							"path": [
+								"conta"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"Teste3\",\r\n    \"senha\": \"test21\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUri}}/conta/login",
+							"host": [
+								"{{baseUri}}"
+							],
+							"path": [
+								"conta",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cadastrar conta",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"Teste3\",\r\n    \"senha\": \"test21\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUri}}/conta/cadastrar",
+							"host": [
+								"{{baseUri}}"
+							],
+							"path": [
+								"conta",
+								"cadastrar"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"// pm.environment.set(\"baseUri\", \"http://localhost:8083\")",
+							"pm.environment.set(\"baseUri\", \"http://host.docker.internal:8083\")"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Carrinho",
+			"item": [
+				{
+					"name": "Add Produto Carrinho",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"Teste3\",\r\n    \"idProduto\": \"2\",\r\n    \"quantidade\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUri}}/carrinho/adicionar",
+							"host": [
+								"{{baseUri}}"
+							],
+							"path": [
+								"carrinho",
+								"adicionar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Produto Carrinho",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"Teste3\",\r\n    \"idProduto\": \"2\",\r\n    \"quantidade\": 15\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUri}}/carrinho/atualizar",
+							"host": [
+								"{{baseUri}}"
+							],
+							"path": [
+								"carrinho",
+								"atualizar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Produto Carrinho",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"Teste3\",\r\n    \"idProduto\": \"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUri}}/carrinho/remover",
+							"host": [
+								"{{baseUri}}"
+							],
+							"path": [
+								"carrinho",
+								"remover"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Carrinho By Login",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"Teste3\",\r\n    \"idProduto\": \"1\",\r\n    \"quantidade\": 6\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUri}}/carrinho/Teste3",
+							"host": [
+								"{{baseUri}}"
+							],
+							"path": [
+								"carrinho",
+								"Teste3"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"baseUri\", \"http://localhost:8085\")"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Gateway",
+			"item": [
+				{
+					"name": "Produto",
+					"item": [
+						{
+							"name": "Get All Produtos",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUri}}/produto",
+									"host": [
+										"{{baseUri}}"
+									],
+									"path": [
+										"produto"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get My Produtos",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUri}}/produto/meus-produtos/Teste3",
+									"host": [
+										"{{baseUri}}"
+									],
+									"path": [
+										"produto",
+										"meus-produtos",
+										"Teste3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deletar Produto",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUri}}/produto/2?login=Teste3",
+									"host": [
+										"{{baseUri}}"
+									],
+									"path": [
+										"produto",
+										"2"
+									],
+									"query": [
+										{
+											"key": "login",
+											"value": "Teste3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Produto By id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUri}}/produto/1?quantidade=1",
+									"host": [
+										"{{baseUri}}"
+									],
+									"path": [
+										"produto",
+										"1"
+									],
+									"query": [
+										{
+											"key": "quantidade",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Produto",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"2\",\r\n    \"dono\": \"Teste3\",\r\n    \"nome\": \"Óleo de cozinha\",\r\n    \"descricao\": \"Óleo para cozinhar\",\r\n    \"totalUnidades\": 100,\r\n    \"valor\": 10\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUri}}/produto/publicar",
+									"host": [
+										"{{baseUri}}"
+									],
+									"path": [
+										"produto",
+										"publicar"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Avaliar Produto",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"2\",\r\n    \"dono\": \"Teste3\",\r\n    \"nome\": \"Óleo de cozinha\",\r\n    \"descricao\": \"Óleo para cozinhar\",\r\n    \"totalUnidades\": 100,\r\n    \"valor\": 10\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUri}}/produto/publicar",
+									"host": [
+										"{{baseUri}}"
+									],
+									"path": [
+										"produto",
+										"publicar"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.environment.set(\"baseUri\", \"http://localhost:8084\")"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Conta",
+					"item": [
+						{
+							"name": "Get All Contas",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUri}}/conta",
+									"host": [
+										"{{baseUri}}"
+									],
+									"path": [
+										"conta"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"Teste3\",\r\n    \"senha\": \"test21\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUri}}/conta/login",
+									"host": [
+										"{{baseUri}}"
+									],
+									"path": [
+										"conta",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cadastrar conta",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"Teste3\",\r\n    \"senha\": \"test21\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUri}}/conta/cadastrar",
+									"host": [
+										"{{baseUri}}"
+									],
+									"path": [
+										"conta",
+										"cadastrar"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"// pm.environment.set(\"baseUri\", \"http://localhost:8083\")",
+									"pm.environment.set(\"baseUri\", \"http://host.docker.internal:8083\")"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Carrinho",
+					"item": [
+						{
+							"name": "Add Produto Carrinho",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"Teste3\",\r\n    \"idProduto\": \"2\",\r\n    \"quantidade\": 10\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUri}}/carrinho/adicionar",
+									"host": [
+										"{{baseUri}}"
+									],
+									"path": [
+										"carrinho",
+										"adicionar"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Atualizar Produto Carrinho",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"Teste3\",\r\n    \"idProduto\": \"2\",\r\n    \"quantidade\": 15\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUri}}/carrinho/atualizar",
+									"host": [
+										"{{baseUri}}"
+									],
+									"path": [
+										"carrinho",
+										"atualizar"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove Produto Carrinho",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"Teste3\",\r\n    \"idProduto\": \"1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUri}}/carrinho/remover",
+									"host": [
+										"{{baseUri}}"
+									],
+									"path": [
+										"carrinho",
+										"remover"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Carrinho By Login",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"Teste3\",\r\n    \"idProduto\": \"1\",\r\n    \"quantidade\": 6\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUri}}/carrinho/Teste3",
+									"host": [
+										"{{baseUri}}"
+									],
+									"path": [
+										"carrinho",
+										"Teste3"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.environment.set(\"baseUri\", \"http://localhost:8085\")"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"baseUri\", \"http://localhost:8080\")"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUri",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

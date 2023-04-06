@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  db-postgres:
+    container_name: db-postgres
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: "Postgres2023!"
+      POSTGRES_DB: "ecommerce"
+    ports:
+      - "5432:5432"
+
+  db-mongo:
+    container_name: db-mongo
+    image: mongo
+    ports:
+      - "27017:27017"

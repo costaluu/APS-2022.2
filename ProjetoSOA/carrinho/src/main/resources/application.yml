@@ -1,0 +1,55 @@
+spring:
+  application:
+    name: carrinho
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    service-url:
+      defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka}
+#  instance:
+#    leaseRenewalIntervalInSeconds: 1
+
+server:
+  port: 8085
+
+conta:
+  servlet:
+    path: /conta
+  api:
+    url: ${CONTA_API_URL:lb://conta}
+  api-key: PIx9BBmbPPLFZfGB
+
+carrinho:
+  servlet:
+    path: /carrinho
+
+produto:
+  api:
+    url: ${PRODUTO_API_URL:lb://produto}
+
+
+#logging
+logging:
+  level:
+    org.springframework.web: DEBUG
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    enabled-by-default: true
+  endpoint:
+    health:
+      show-details: always
+    circuitbreakers:
+      enabled: true
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      register-health-indicator: true
