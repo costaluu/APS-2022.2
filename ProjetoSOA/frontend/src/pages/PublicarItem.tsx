@@ -49,7 +49,7 @@ export default function PublicarItem() {
     return (
         <div className="w-screen h-screen m-0 p-0 bg-gradient-to-r from-rose-100 to-teal-100 flex justify-center items-center">
             <ToastContainer></ToastContainer>
-            <div className="w-[36rem] h-[26rem] bg-white rounded-lg shadow-lg flex flex-col space-y-2 p-4">
+            <div className="w-[36rem] h-[23rem] bg-white rounded-lg shadow-lg flex flex-col space-y-2 p-4">
                 <span className="text-lg font-semibold">Publicar Item</span>
                 <span className="text-gray-900">Credencial</span>
                 <div className="w-full flex flex-row space-x-2">

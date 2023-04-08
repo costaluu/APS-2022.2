@@ -42,7 +42,7 @@ export default function Cadastro() {
     return (
         <div className="w-screen h-screen m-0 p-0 bg-gradient-to-r from-rose-100 to-teal-100 flex justify-center items-center">
             <ToastContainer></ToastContainer>
-            <div className="w-72 h-[20rem] bg-white rounded-lg shadow-lg flex flex-col space-y-2 p-4">
+            <div className="w-72 h-[17rem] bg-white rounded-lg shadow-lg flex flex-col space-y-2 p-4">
                 <span className="text-lg font-semibold">
                     E-Commerce Cadastro
                 </span>
