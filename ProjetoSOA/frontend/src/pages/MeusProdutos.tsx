@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import useFetch from "../useFetch";
 import { Produto } from "./Produto";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -9,12 +8,36 @@ import "react-toastify/dist/ReactToastify.css";
 export default function MeusProdutos() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const [data, setData] = useState<Produto[] | undefined>(undefined);
 
-    const { data, error } = useFetch<Produto[]>(
-        `http://localhost:8080/produto/meus-produtos/${id}`
-    );
+    useEffect(() => {
+        const controller = new AbortController();
 
-    if (error || !data) {
+        const loader = async () => {
+            try {
+                const result = await axios.get(
+                    `http://localhost:8080/produto/meus-produtos/${id}`
+                );
+
+                if (result.status != 200) {
+                    toast.error("Algo deu errado :/");
+
+                    return;
+                }
+
+                setData(result.data);
+            } catch (e) {
+                toast.error("Algo deu errado :/");
+                setData([]);
+            }
+        };
+
+        loader();
+
+        return () => controller.abort();
+    }, []);
+
+    if (!data) {
         return (
             <div className="w-screen h-screen m-0 p-0 bg-gradient-to-r from-rose-100 to-teal-100 flex justify-center items-center">
                 <ToastContainer></ToastContainer>
@@ -69,7 +92,11 @@ export default function MeusProdutos() {
 
             if (result.status != 200) {
                 toast.error("Algo deu errado :/");
+
+                return;
             }
+
+            setData(data.filter((product) => product.id != productId));
         } catch (e) {
             toast.error("Algo deu errado :/");
         }
