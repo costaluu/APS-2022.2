@@ -1,7 +1,14 @@
 import React, { ReactNode, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { z } from "zod";
-import useForm from "../useFOrm";
+import useForm from "../useForm";
+
+export const credentialsSchema = z.object({
+    login: z.string().email(),
+    senha: z.string(),
+});
+
+export type Credentials = z.infer<typeof credentialsSchema>;
 
 export default function Login() {
     const emailRef = useRef();
@@ -55,16 +62,14 @@ export default function Login() {
         setData(undefined);
         setError(undefined);
 
-        const schema = z.object({
-            login: z.string().email().min(1),
-            senha: z.string().min(1),
-        });
-
         const form = useForm(
-            schema,
+            credentialsSchema,
             async (parsedData) => {
                 try {
-                    const res = await axios.post("http://localhost:8080/conta/login", parsedData);
+                    const res = await axios.post(
+                        "http://localhost:8080/conta/login",
+                        parsedData
+                    );
 
                     if (res.status !== 200) setError("Credenciais Invalidas");
                     else setData(res.status);
@@ -97,22 +102,26 @@ export default function Login() {
                 <input
                     ref={emailRef as any}
                     type="text"
-                    className="px-2 py-1 w-full border border-gray-300 text-gray-800 rounded-md outline-none"></input>
+                    className="px-2 py-1 w-full border border-gray-300 text-gray-800 rounded-md outline-none"
+                ></input>
                 <span className="text-gray-900">Password</span>
                 <input
                     ref={passRef as any}
                     type="password"
-                    className="px-2 py-1 w-full border border-gray-300 text-gray-800 rounded-md outline-none"></input>
+                    className="px-2 py-1 w-full border border-gray-300 text-gray-800 rounded-md outline-none"
+                ></input>
                 <button
                     onClick={() => handleSubmit()}
                     type="button"
-                    className="px-2 py-1 w-full bg-teal-400 rounded-md text-white">
+                    className="px-2 py-1 w-full bg-teal-400 rounded-md text-white"
+                >
                     Login
                 </button>
                 <div className="flex w-full justify-end">
                     <a
                         href="/cadastro"
-                        className="cursor-pointer text-sm text-gray-00 hover:underline">
+                        className="cursor-pointer text-sm text-gray-00 hover:underline"
+                    >
                         Cadastrar
                     </a>
                 </div>

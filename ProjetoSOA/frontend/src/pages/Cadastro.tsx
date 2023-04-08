@@ -1,7 +1,8 @@
 import React, { ReactNode, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { z } from "zod";
-import useForm from "../useFOrm";
+import useForm from "../useForm";
+import { credentialsSchema } from "./Login";
 
 export default function Cadastro() {
     const emailRef = useRef();
@@ -51,13 +52,8 @@ export default function Cadastro() {
     }, [loading, error, error]);
 
     const handleSubmit = async () => {
-        const schema = z.object({
-            login: z.string().email().min(1),
-            senha: z.string().min(1),
-        });
-
         const form = useForm(
-            schema,
+            credentialsSchema,
             async (parsedData) => {
                 setLoading(true);
                 setData(undefined);
@@ -93,28 +89,34 @@ export default function Cadastro() {
     return (
         <div className="w-screen h-screen m-0 p-0 bg-gradient-to-r from-rose-100 to-teal-100 flex justify-center items-center">
             <div className="w-72 h-[20rem] bg-white rounded-lg shadow-lg flex flex-col space-y-2 p-4">
-                <span className="text-lg font-semibold">E-Commerce Cadastro</span>
+                <span className="text-lg font-semibold">
+                    E-Commerce Cadastro
+                </span>
                 {placeHolder}
                 <span className="text-gray-900">Email</span>
                 <input
                     ref={emailRef as any}
                     type="text"
-                    className="px-2 py-1 w-full border border-gray-300 text-gray-800 rounded-md outline-none"></input>
+                    className="px-2 py-1 w-full border border-gray-300 text-gray-800 rounded-md outline-none"
+                ></input>
                 <span className="text-gray-900">Password</span>
                 <input
                     ref={passRef as any}
                     type="password"
-                    className="px-2 py-1 w-full border border-gray-300 text-gray-800 rounded-md outline-none"></input>
+                    className="px-2 py-1 w-full border border-gray-300 text-gray-800 rounded-md outline-none"
+                ></input>
                 <button
                     onClick={() => handleSubmit()}
                     type="button"
-                    className="px-2 py-1 w-full bg-teal-400 rounded-md text-white">
+                    className="px-2 py-1 w-full bg-teal-400 rounded-md text-white"
+                >
                     Cadastrar
                 </button>
                 <div className="flex w-full justify-end">
                     <a
                         href="/login"
-                        className="cursor-pointer text-sm text-gray-00 hover:underline">
+                        className="cursor-pointer text-sm text-gray-00 hover:underline"
+                    >
                         Login
                     </a>
                 </div>

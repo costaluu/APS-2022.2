@@ -1,21 +1,31 @@
 import axios from "axios";
 import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { z } from "zod";
-import useForm from "../useFOrm";
+import useForm from "../useForm";
 import { useNavigate, useParams } from "react-router-dom";
 
-const produtoSchema = z.object({
+// "id": "2",
+// "dono": "Teste3",
+// "nome": "Óleo de cozinha",
+// "descricao": "Óleo para cozinhar",
+// "totalUnidades": 100,
+// "valor": 10
+
+export const produtoSchema = z.object({
     id: z.string(),
     dono: z.string(),
-    nome: z.string(),
-    descricao: z.string(),
-    totalUnidade: z.number(),
-    valor: z.number(),
+    nome: z.string().min(1),
+    descricao: z.string().min(1),
+    valor: z.preprocess((a) => parseInt(z.string().parse(a), 10), z.number()),
+    totalUnidades: z.preprocess(
+        (a) => parseInt(z.string().parse(a), 10),
+        z.number()
+    ),
 });
 
-type Produto = z.infer<typeof produtoSchema>;
+export type Produto = z.infer<typeof produtoSchema>;
 
-export default function Produto() {
+export default function PageProduto() {
     const { id } = useParams();
 
     const emailRef = useRef();
@@ -60,7 +70,9 @@ export default function Produto() {
 
         if (!product && id) {
             const loader = async () => {
-                const res = await axios.get(`http://localhost:8080/produto?${id}?quantidade=1`);
+                const res = await axios.get(
+                    `http://localhost:8080/produto?${id}?quantidade=1`
+                );
 
                 if (res.status == 404) {
                     navigate("/404");
@@ -82,17 +94,23 @@ export default function Produto() {
 
         const schema = z.object({
             login: z.string().email().min(1),
-            quantidade: z.preprocess((a) => parseInt(z.string().parse(a), 10), z.number()),
+            quantidade: z.preprocess(
+                (a) => parseInt(z.string().parse(a), 10),
+                z.number()
+            ),
         });
 
         const form = useForm(
             schema,
             async (parsedData) => {
                 try {
-                    const res = await axios.post("http://localhost:8080/carrinho/adicionar", {
-                        idProduto: id!,
-                        ...parsedData,
-                    });
+                    const res = await axios.post(
+                        "http://localhost:8080/carrinho/adicionar",
+                        {
+                            idProduto: id!,
+                            ...parsedData,
+                        }
+                    );
 
                     if (res.status !== 200) setError("Ocorreu um erro");
                     else setData(res.status);
@@ -125,49 +143,64 @@ export default function Produto() {
                         <div className="flex flex-row items-baseline space-x-2">
                             <div
                                 role="status"
-                                className="flex h-8 w-36 animate-pulse rounded-md bg-gray-200"></div>
+                                className="flex h-8 w-36 animate-pulse rounded-md bg-gray-200"
+                            ></div>
                             <div
                                 role="status"
-                                className="flex h-5 w-24 animate-pulse rounded-md bg-gray-200"></div>
+                                className="flex h-5 w-24 animate-pulse rounded-md bg-gray-200"
+                            ></div>
                         </div>
                         <div
                             role="status"
-                            className="flex h-5 w-full animate-pulse rounded-md bg-gray-200"></div>
+                            className="flex h-5 w-full animate-pulse rounded-md bg-gray-200"
+                        ></div>
                         <div
                             role="status"
-                            className="flex h-5 w-full animate-pulse rounded-md bg-gray-200"></div>
+                            className="flex h-5 w-full animate-pulse rounded-md bg-gray-200"
+                        ></div>
                         <div className="flex flex-row items-baseline justify-between">
                             <div
                                 role="status"
-                                className="flex h-5 w-14 animate-pulse rounded-md bg-gray-200"></div>
+                                className="flex h-5 w-14 animate-pulse rounded-md bg-gray-200"
+                            ></div>
                             <div
                                 role="status"
-                                className="flex h-5 w-24 animate-pulse rounded-md bg-gray-200"></div>
+                                className="flex h-5 w-24 animate-pulse rounded-md bg-gray-200"
+                            ></div>
                         </div>
                     </>
                 ) : (
                     <>
                         <div className="flex flex-row items-baseline space-x-2">
-                            <span className="text-2xl font-semibold">{product.nome}</span>
+                            <span className="text-2xl font-semibold">
+                                {product.nome}
+                            </span>
                             <span className="text-base text-gray-400">
                                 vendido por: {product.dono}
                             </span>
                         </div>
-                        <span className="text-gray-600 text-base">{product.descricao}</span>
+                        <span className="text-gray-600 text-base">
+                            {product.descricao}
+                        </span>
                         <div className="flex flex-row items-baseline justify-between">
-                            <span className="text-lg font-semibold">R$ {product.valor}</span>
-                            <span className="text-base">Quantidade: {product.totalUnidade}</span>
+                            <span className="text-lg font-semibold">
+                                R$ {product.valor}
+                            </span>
+                            <span className="text-base">
+                                Quantidade: {product.totalUnidades}
+                            </span>
                         </div>
                     </>
                 )}
 
-                <span className="text-gray-900">Credenciais</span>
+                <span className="text-gray-900">Credencial</span>
                 <div className="w-full flex flex-row space-x-2">
                     <input
                         ref={emailRef as any}
                         type="text"
                         className="px-2 py-1 w-full border border-gray-300 text-gray-800 rounded-md outline-none"
-                        placeholder="Email"></input>
+                        placeholder="Email"
+                    ></input>
                 </div>
                 <div className="w-full flex flex-row space-x-2 items-center">
                     <span className="text-gray-600 text-base">Quantidade</span>
@@ -175,12 +208,14 @@ export default function Produto() {
                         ref={quantityRef as any}
                         type="text"
                         className="px-2 py-1 w-full border border-gray-300 text-gray-800 rounded-md outline-none"
-                        placeholder="Quantidade"></input>
+                        placeholder="Quantidade"
+                    ></input>
                 </div>
                 <button
                     onClick={() => handleSubmit()}
                     type="button"
-                    className="px-2 py-1 w-full bg-teal-400 rounded-md text-white">
+                    className="px-2 py-1 w-full bg-teal-400 rounded-md text-white"
+                >
                     Adicionar ao carrinho
                 </button>
             </div>

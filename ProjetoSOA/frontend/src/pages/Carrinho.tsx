@@ -1,214 +1,220 @@
 import axios from "axios";
-import React, { useRef, useState } from "react";
-import { useQuery } from "react-query";
-import { z } from "zod";
-import useForm from "../useFOrm";
-
-const checkout = async () => {
-    const checkoutInfo = {
-        login: "teste2",
-        numCartao: "1",
-        codSeguranca: 1,
-        validade: "1",
-        nomeNoCartao: "1",
-    };
-    const res = await axios.post("http://localhost:8082/carrinho/pagamento", checkoutInfo);
-    return res.status;
-};
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Produto } from "./Produto";
 
 export default function Item() {
-    const imgSrc: string = `https://i.pinimg.com/originals/d3/51/cb/d351cbd7bf0814648f9949cd4eba8be8.jpg`;
-    const [pagamentoCartao, setPagamentoCartao] = useState<boolean>(true);
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const [data, setData] = useState<Produto[] | undefined>(undefined);
 
-    const emailRef = useRef();
-    const passRef = useRef();
-    const cardNameRef = useRef();
-    const cardNumberRef = useRef();
-    const cardExpirationDateRef = useRef();
-    const cardSecurityCodeRef = useRef();
+    useEffect(() => {
+        if (data) return;
 
-    const [data, setData] = useState<number | undefined>(undefined);
-    const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string | undefined>(undefined);
+        const controller = new AbortController();
 
-    let placeHolder = <></>;
+        const loader = async () => {
+            try {
+                const result = await axios.get(
+                    `http://localhost:8080/carrinho/${id}`
+                );
 
-    if (loading) {
-        placeHolder = (
-            <div className="px-2 py-1 border-l-4 border-blue-400 text-blue-700 bg-blue-100">
-                Loading...
-            </div>
-        );
-    }
+                if (result.status != 200) {
+                    toast.error("Algo deu errado :/");
 
-    if (error) {
-        placeHolder = (
-            <div className="px-2 py-1 border-l-4 border-red-400 text-red-700 bg-red-100">
-                {error}
-            </div>
-        );
-    }
-
-    if (data) {
-        placeHolder = (
-            <div className="px-2 py-1 border-l-4 border-green-400 text-green-700 bg-green-100">
-                Pedido criado!
-            </div>
-        );
-    }
-
-    const handleSubmit = async () => {
-        const schema = z.object({
-            login: z.string().email().min(1),
-            senha: z.string().min(1),
-            numCartao: z.string().min(1),
-            nomeNoCartao: z.string().min(1),
-            validade: z.string().length(3),
-            codSeguranca: z.string(),
-        });
-
-        const form = useForm(
-            schema,
-            async (parsedData) => {
-                setLoading(true);
-                setData(undefined);
-
-                try {
-                    const res = await axios.post(
-                        "http://localhost:8082/carrinho/pagamento",
-                        parsedData
-                    );
-
-                    if (res.status !== 200) setError("Credenciais Invalidas");
-                    else setData(res.status);
-                } catch (e) {
-                    setError("Ocorreu um erro.");
+                    return;
                 }
 
-                setLoading(false);
-            },
-            () => {
-                setError("Verifique os campos.");
-                setLoading(false);
+                setData(result.data);
+            } catch (e) {
+                toast.error("Algo deu errado :/");
+                setData([]);
             }
-        );
-
-        const obj = {
-            login: (emailRef.current as any).value,
-            senha: (passRef.current as any).value,
-            numCartao: (cardNumberRef.current as any).value,
-            nomeNoCartao: (cardNameRef.current as any).value,
-            validade: (cardExpirationDateRef.current as any).value,
-            codSeguranca: (cardSecurityCodeRef.current as any).value,
         };
 
-        (await form).onSubmit(obj);
+        loader();
+
+        return () => controller.abort();
+    }, []);
+
+    if (!data) {
+        return (
+            <div className="w-screen h-screen m-0 p-0 bg-gradient-to-r from-rose-100 to-teal-100 flex justify-center items-center">
+                <ToastContainer></ToastContainer>
+                <div className="w-3/4 h-5/6 bg-white rounded-lg shadow-lg flex flex-col space-y-2 p-4 overflow-y-auto mb-4">
+                    <span className="text-lg font-semibold">
+                        Carrinho de {id}
+                    </span>
+                    {new Array(5).fill(0).map((_, index) => {
+                        return (
+                            <div key={index} className="space-y-2">
+                                <div className="flex flex-row items-baseline space-x-2">
+                                    <div
+                                        role="status"
+                                        className="flex h-8 w-36 animate-pulse rounded-md bg-gray-200"
+                                    ></div>
+                                    <div
+                                        role="status"
+                                        className="flex h-5 w-24 animate-pulse rounded-md bg-gray-200"
+                                    ></div>
+                                </div>
+                                <div
+                                    role="status"
+                                    className="flex h-5 w-full animate-pulse rounded-md bg-gray-200"
+                                ></div>
+                                <div
+                                    role="status"
+                                    className="flex h-5 w-full animate-pulse rounded-md bg-gray-200"
+                                ></div>
+                                <div className="flex flex-row items-baseline justify-between">
+                                    <div
+                                        role="status"
+                                        className="flex h-5 w-14 animate-pulse rounded-md bg-gray-200"
+                                    ></div>
+                                    <div
+                                        role="status"
+                                        className="flex h-5 w-24 animate-pulse rounded-md bg-gray-200"
+                                    ></div>
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
+        );
+    }
+
+    const handleUpdateProduct = async (productId: string, quantity: number) => {
+        try {
+            const result = await axios.put(
+                "http://localhost:8080/carrinho/atualizar",
+                {
+                    login: id,
+                    idProduto: productId,
+                    quantidade: quantity,
+                }
+            );
+
+            if (result.status != 200) {
+                toast.error("Something went wrong :/");
+            }
+        } catch (e) {
+            toast.error("Something went wrong :/");
+        }
+    };
+
+    const handleRemoveProduct = async (productId: string) => {
+        try {
+            const result = await axios.delete(
+                "http://localhost:8080/carrinho/remover",
+                {
+                    data: {
+                        login: id,
+                        idProduto: productId,
+                    },
+                }
+            );
+
+            if (result.status != 200) {
+                toast.error("Something went wrong :/");
+            } else {
+                setData(data.filter((prod) => prod.id != productId));
+                toast.success("Product deleted!");
+            }
+        } catch (e) {
+            toast.error("Something went wrong :/");
+        }
     };
 
     return (
         <div className="w-screen h-screen m-0 p-0 bg-gradient-to-r from-rose-100 to-teal-100 flex justify-center items-center">
-            <div className="w-[40rem] h-[44rem] bg-white rounded-lg shadow-lg flex flex-col space-y-2 p-4">
-                <span className="text-lg font-semibold">Carrinho</span>
-                <div className="flex flex-row space-x-2 items-center">
-                    <div className="p-2 border border-gray-300 rounded-md">
-                        <img src={imgSrc} className="w-12 object-contain" />
-                    </div>
-                    <div className="flex flex-col space-y-1 flex-grow">
-                        <span className="text-lg font-semibold">Shrek</span>
-                        <span className="text-md text-gray-900">13 em estoque</span>
-                    </div>
-                    <div className="flex flex-col space-y-1 justify-center item-center">
-                        <span className="text-lg font-semibold">Quantidade</span>
-                        <span className="text-md text-gray-900">2</span>
-                    </div>
-                    <div className="flex flex-col space-y-1 justify-center item-center">
-                        <span className="text-lg font-semibold">Preço</span>
-                        <span className="text-md text-gray-900">R$ 1000</span>
-                    </div>
-                </div>
-                <div className="w-full flex flex-col justify-end border-t border-gray-300">
-                    <span className="font-semibold place-self-end">Total</span>
-                    <span className="text-gray-800 place-self-end">R$ 2000</span>
-                </div>
-                <span>Credenciais</span>
-                <div className="w-full flex flex-row space-x-2">
-                    <input
-                        ref={emailRef as any}
-                        type="text"
-                        className="px-2 py-1 w-full border border-gray-300 text-gray-800 rounded-md outline-none"
-                        placeholder="Email"></input>
-                    <input
-                        ref={passRef as any}
-                        type="password"
-                        className="px-2 py-1 w-full border border-gray-300 text-gray-800 rounded-md outline-none"
-                        placeholder="Passowrd"></input>
-                </div>
-                <span>Método de pagamento</span>
-                {placeHolder}
-                <div className="flex flex-col space-y-2 w-full">
-                    <div className="grid grid-cols-2">
-                        <button
-                            onClick={() => setPagamentoCartao(true)}
-                            type="button"
-                            className={
-                                "font-semibold px-2 py-2 rounded-md hover:bg-gray-100" +
-                                (pagamentoCartao ? " bg-gray-100" : "")
-                            }>
-                            Cartão
-                        </button>
-                        <button
-                            onClick={() => setPagamentoCartao(false)}
-                            type="button"
-                            className={
-                                "font-semibold px-2 py-2 rounded-md hover:bg-gray-100" +
-                                (pagamentoCartao ? "" : " bg-gray-100")
-                            }>
-                            PIX
-                        </button>
-                    </div>
-                    {pagamentoCartao ? (
-                        <>
-                            <span className="text-gray-900">Nome no cartão</span>
-                            <input
-                                ref={cardNameRef as any}
-                                type="text"
-                                className="px-2 py-1 w-full border border-gray-300 text-gray-800 rounded-md outline-none"></input>
-                            <span>Informação do cartão</span>
-                            <div className="flex flex-row space-x-2">
-                                <input
-                                    ref={cardNumberRef as any}
-                                    type="text"
-                                    className="flex-grow px-2 py-1 border border-gray-300 text-gray-800 rounded-md outline-none"
-                                    placeholder="Número do cartão"></input>
-                                <input
-                                    ref={cardExpirationDateRef as any}
-                                    type="text"
-                                    className="px-2 py-1 w-20 border border-gray-300 text-gray-800 rounded-md outline-none"
-                                    placeholder="Validade"></input>
-                                <input
-                                    ref={cardSecurityCodeRef as any}
-                                    type="text"
-                                    className="px-2 py-1 w-28 border border-gray-300 text-gray-800 rounded-md outline-none"
-                                    placeholder="Código de segurança"></input>
+            <ToastContainer></ToastContainer>
+            <div className="w-3/4 h-5/6 bg-white rounded-lg shadow-lg flex flex-col space-y-2 p-4 overflow-y-auto mb-4">
+                <span className="text-lg font-semibold">Carrinho de {id}</span>
+                {data.map((produto, index) => {
+                    return (
+                        <div
+                            key={produto.id}
+                            className="border border-gray-300 rounded-md p-2 hover:bg-gray-50 flex flex-row justify-between"
+                        >
+                            <div className="flex-grow">
+                                <div
+                                    onClick={() =>
+                                        navigate(`/produto/${produto.id}`)
+                                    }
+                                    className="flex flex-row items-baseline space-x-2 cursor-pointer"
+                                >
+                                    <span className="text-2xl font-semibold">
+                                        {produto.nome}
+                                    </span>
+                                    <span className="text-base text-gray-400">
+                                        vendido por: {produto.dono}
+                                    </span>
+                                </div>
+                                <span
+                                    onClick={() =>
+                                        navigate(`/produto/${produto.id}`)
+                                    }
+                                    className="text-gray-600 text-base cursor-pointer"
+                                >
+                                    {produto.descricao}
+                                </span>
+                                <div className="flex flex-row items-baseline justify-between">
+                                    <span className="text-lg font-semibold">
+                                        R$ {produto.valor}
+                                    </span>
+                                    <div className="flex flex-row space-x-2 items-center">
+                                        <span className="text-base">
+                                            Quantidade:
+                                        </span>
+                                        <input
+                                            type="number"
+                                            className="border border-gray-300 rounded-md focus:ring-0 focus:outline-none px-2 text-sm py-0.5"
+                                            value={produto.totalUnidades}
+                                            onChange={(event) => {
+                                                setData((currentData) => {
+                                                    if (!currentData) {
+                                                        return currentData;
+                                                    }
+
+                                                    let newData = currentData;
+                                                    newData[
+                                                        index
+                                                    ].totalUnidades = parseInt(
+                                                        event.target.value
+                                                    );
+
+                                                    return [...newData];
+                                                });
+                                            }}
+                                        ></input>
+                                        <button
+                                            onClick={() =>
+                                                handleUpdateProduct(
+                                                    produto.id,
+                                                    data[index].totalUnidades
+                                                )
+                                            }
+                                            type="button"
+                                            className="bg-sky-500 rounded-md p-1 flex-initial text-white ml-6 hover:bg-sky-600 text-sm"
+                                        >
+                                            Atualizar
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                             <button
-                                onClick={() => handleSubmit()}
+                                onClick={() => handleRemoveProduct(produto.id)}
                                 type="button"
-                                className="px-2 py-1 w-full bg-teal-400 rounded-md text-white hover:bg-teal-500">
-                                Efetuar pagamento
+                                className="bg-red-500 rounded-md p-2 flex-initial text-white ml-6 hover:bg-red-600"
+                            >
+                                Deletar Produto
                             </button>
-                        </>
-                    ) : (
-                        <>
-                            <button
-                                onClick={() => handleSubmit()}
-                                type="button"
-                                className="px-2 py-1 w-full bg-teal-400 rounded-md text-white hover:bg-teal-500">
-                                Efetuar pagamento
-                            </button>
-                        </>
-                    )}
-                </div>
+                        </div>
+                    );
+                })}
             </div>
         </div>
     );

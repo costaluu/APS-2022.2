@@ -5,23 +5,38 @@ import Login from "./pages/Login";
 import PublicarItem from "./pages/PublicarItem";
 import Produto from "./pages/Produto";
 import Carrinho from "./pages/Carrinho";
-import { QueryClient, QueryClientProvider } from "react-query";
-const queryClient = new QueryClient();
+import ProdutosPage from "./pages/Produtos";
+import MeusProdutos from "./pages/MeusProdutos";
 
 function App() {
     return (
-        <QueryClientProvider client={queryClient}>
-            <BrowserRouter>
-                <Routes>
-                    <Route path="/cadastro" element={<Cadastro></Cadastro>}></Route>
-                    <Route path="/login" element={<Login></Login>}></Route>
-                    <Route path="/publicar" element={<PublicarItem></PublicarItem>}></Route>
-                    <Route path="/produto/:id" element={<Produto></Produto>}></Route>
-                    <Route path="/carrinho" element={<Carrinho></Carrinho>}></Route>
-                    <Route path="/404" element={<div>404 - Not found</div>}></Route>
-                </Routes>
-            </BrowserRouter>
-        </QueryClientProvider>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/cadastro" element={<Cadastro></Cadastro>}></Route>
+                <Route path="/login" element={<Login></Login>}></Route>
+                <Route
+                    path="/produtos"
+                    element={<ProdutosPage></ProdutosPage>}
+                ></Route>
+                <Route
+                    path="/produtos/:id"
+                    element={<MeusProdutos></MeusProdutos>}
+                ></Route>
+                <Route
+                    path="/publicar"
+                    element={<PublicarItem></PublicarItem>}
+                ></Route>
+                <Route
+                    path="/produto/:id"
+                    element={<Produto></Produto>}
+                ></Route>
+                <Route
+                    path="/carrinho/:id"
+                    element={<Carrinho></Carrinho>}
+                ></Route>
+                <Route path="/404" element={<div>404 - Not found</div>}></Route>
+            </Routes>
+        </BrowserRouter>
     );
 }
 
