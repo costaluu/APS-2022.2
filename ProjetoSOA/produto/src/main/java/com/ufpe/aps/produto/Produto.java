@@ -1,7 +1,5 @@
 package com.ufpe.aps.produto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -12,6 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "produto")
 public class Produto {
 
@@ -30,6 +29,5 @@ public class Produto {
 
     private Float avaliacao;
 
-    @JsonIgnore(JsonInclude.Include.NON_NULL)
     private Integer qtdAvaliacoes;
 }

@@ -1,4 +1,4 @@
-FROM maven:3.8.5-openjdk-17-slim AS build
+FROM maven:3.9.1-amazoncorretto-17 AS build
 COPY pom.xml /app/
 COPY src /app/src
 RUN mvn -f /app/pom.xml clean package

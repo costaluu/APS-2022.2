@@ -18,7 +18,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("${conta.servlet.path}")
-@CrossOrigin
 public class ComunicacaoConta {
 
     private final FachadaConta fachadaConta;

@@ -6,6 +6,8 @@ uris:
     uri: lb://produto
   conta:
     uri: lb://conta
+  carrinho:
+    uri: lb://carrinho
 
 eureka:
   client:
@@ -36,14 +38,14 @@ spring:
           uri: ${uris.produto.uri}
           predicates:
             - Path=${gateway-paths.produto}/**
-            - Method=GET,POST,OPTIONS
+            - Method=GET,POST,DELETE,OPTIONS
         - id: conta
           uri: ${uris.conta.uri}
           predicates:
             - Path=${gateway-paths.conta}/**
             - Method=GET,POST,OPTIONS
         - id: carrinho
-          uri: ${uris.conta.uri}
+          uri: ${uris.carrinho.uri}
           predicates:
               - Path=${gateway-paths.carrinho}/**
               - Method=GET,POST,OPTIONS

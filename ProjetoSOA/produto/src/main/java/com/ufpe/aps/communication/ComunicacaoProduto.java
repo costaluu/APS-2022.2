@@ -3,11 +3,9 @@ package com.ufpe.aps.communication;
 import com.ufpe.aps.carrinho.Carrinho;
 import com.ufpe.aps.exception.IsNotOwnerOfProductException;
 import com.ufpe.aps.exception.ProdutoNotFoundException;
-import com.ufpe.aps.exception.QuantidadeProdutoException;
 import com.ufpe.aps.pojo.AvaliacaoDTO;
 import com.ufpe.aps.produto.FachadaProduto;
 import com.ufpe.aps.produto.Produto;
-import com.ufpe.aps.produto.ServicoProduto;
 import com.ufpe.aps.repository.bdr.ProdutoDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin
 @RequestMapping("${produto.servlet.path}")
 public class ComunicacaoProduto {
 
