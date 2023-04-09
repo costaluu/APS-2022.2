@@ -5,13 +5,16 @@ import { useNavigate } from "react-router-dom";
 import useFetch from "../useFetch";
 
 export const credentialsSchema = z.object({
-    login: z.string().email(),
+    login: z.string(),
     senha: z.string(),
 });
 
 export type Credentials = z.infer<typeof credentialsSchema>;
 
 export default function ProdutosPage() {
+
+    const navigate = useNavigate();
+
     const { data, error } = useFetch<Produto[]>(
         "http://localhost:8080/produto"
     );
@@ -59,8 +62,6 @@ export default function ProdutosPage() {
             </div>
         );
     }
-
-    const navigate = useNavigate();
 
     return (
         <div className="w-screen h-screen m-0 p-0 bg-gradient-to-r from-rose-100 to-teal-100 flex justify-center items-center">

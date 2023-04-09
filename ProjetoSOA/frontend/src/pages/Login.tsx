@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const credentialsSchema = z.object({
-    login: z.string().email(),
+    login: z.string(),
     senha: z.string(),
 });
 
@@ -25,10 +25,11 @@ export default function Login() {
                         "http://localhost:8080/conta/login",
                         parsedData
                     );
-
-                    if (res.status !== 200)
+                    
+                    if (res.status >= 200 && res.status < 300)
+                        toast.success("Logado!");
+                    else 
                         toast.error("Credenciais Invalidas.");
-                    else toast.success("Logado!");
                 } catch (e) {
                     toast.error("Algo deu errado :/");
                 }

@@ -12,11 +12,8 @@ export const produtoSchema = z.object({
     dono: z.string(),
     nome: z.string().min(1),
     descricao: z.string().min(1),
-    valor: z.preprocess((a) => parseInt(z.string().parse(a), 10), z.number()),
-    totalUnidades: z.preprocess(
-        (a) => parseInt(z.string().parse(a), 10),
-        z.number()
-    ),
+    valor: z.number(),
+    totalUnidades: z.number(),
 });
 
 export type Produto = z.infer<typeof produtoSchema>;
@@ -32,11 +29,8 @@ export default function PageProduto() {
 
     const handleAddToCart = async () => {
         const schema = z.object({
-            login: z.string().email().min(1),
-            quantidade: z.preprocess(
-                (a) => parseInt(z.string().parse(a), 10),
-                z.number()
-            ),
+            login: z.string().min(1),
+            quantidade: z.number()
         });
 
         const form = useForm(
@@ -64,7 +58,7 @@ export default function PageProduto() {
 
         const obj = {
             login: (emailRef.current as any).value,
-            quantidade: (quantityRef.current as any).value,
+            quantidade: parseInt((quantityRef.current as any).value),
         };
 
         (await form).onSubmit(obj);

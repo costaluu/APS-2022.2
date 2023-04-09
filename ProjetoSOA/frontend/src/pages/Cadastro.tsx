@@ -19,9 +19,10 @@ export default function Cadastro() {
                         parsedData
                     );
 
-                    if (res.status !== 200)
-                        toast.error("Credenciais Invalidas.");
-                    else toast.success("Conta cadastrada!");
+                    if (res.status >= 200 && res.status < 300)
+                        toast.success("Conta cadastrada!");
+                    else 
+                        toast.error("Algo deu errado :/");
                 } catch (e) {
                     toast.error("Algo deu errado :/");
                 }

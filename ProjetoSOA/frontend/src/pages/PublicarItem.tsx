@@ -14,36 +14,29 @@ export default function PublicarItem() {
     const totalRef = useRef();
 
     const handleSubmit = async () => {
-        const form = useForm(
-            produtoSchema,
-            async (parsedData) => {
-                try {
-                    const res = await axios.post(
-                        "http://localhost:8080/produto/publicar",
-                        parsedData
-                    );
-
-                    if (res.status !== 200) toast.error("Algo deu errado :/");
-                    else toast.success("Produto publicado!");
-                } catch (e) {
-                    toast.error("Algo deu errado :/");
-                }
-            },
-            () => {
-                toast.error("Verifique os campos.");
-            }
-        );
-
         const obj: Produto = {
             id: nanoid(),
             dono: (emailRef.current as any).value,
             nome: (nameRef.current as any).value,
             descricao: (descriptionRef.current as any).value,
-            valor: (priceRef.current as any).value,
-            totalUnidades: (totalRef.current as any).value,
+            valor: parseFloat((priceRef.current as any).value),
+            totalUnidades: parseInt((totalRef.current as any).value),
         };
 
-        (await form).onSubmit(obj);
+        try {
+            const result = produtoSchema.parse(obj);
+            try {
+                const res = await axios.post("http://localhost:8080/produto/publicar", result);
+
+                if (res.status !== 200) toast.error("Algo deu errado :/");
+                else toast.success("Produto publicado!");
+            } catch (e) {
+                toast.error("Algo deu errado :/");
+            }
+        } catch (error) {
+            console.log(error)
+            toast.error("Verifique os campos.");
+        }
     };
 
     return (

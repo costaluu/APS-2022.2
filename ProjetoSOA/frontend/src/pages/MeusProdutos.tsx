@@ -19,7 +19,7 @@ export default function MeusProdutos() {
                     `http://localhost:8080/produto/meus-produtos/${id}`
                 );
 
-                if (result.status != 200) {
+                if (result.status > 300) {
                     toast.error("Algo deu errado :/");
 
                     return;
@@ -90,7 +90,7 @@ export default function MeusProdutos() {
                 `http://localhost:8080/produto/${productId}?login=${id}`
             );
 
-            if (result.status != 200) {
+            if (result.status > 300) {
                 toast.error("Algo deu errado :/");
 
                 return;
