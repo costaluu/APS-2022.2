@@ -48,7 +48,7 @@ spring:
           uri: ${uris.carrinho.uri}
           predicates:
               - Path=${gateway-paths.carrinho}/**
-              - Method=GET,POST,OPTIONS
+              - Method=GET,POST,PUT,DELETE,OPTIONS
 
 logging:
   level:
