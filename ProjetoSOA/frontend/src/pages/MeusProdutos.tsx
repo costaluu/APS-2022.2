@@ -15,9 +15,7 @@ export default function MeusProdutos() {
 
         const loader = async () => {
             try {
-                const result = await axios.get(
-                    `http://localhost:8080/produto/meus-produtos/${id}`
-                );
+                const result = await axios.get(`http://localhost:8080/produto/meus-produtos/${id}`);
 
                 if (result.status > 300) {
                     toast.error("Algo deu errado :/");
@@ -42,39 +40,31 @@ export default function MeusProdutos() {
             <div className="w-screen h-screen m-0 p-0 bg-gradient-to-r from-rose-100 to-teal-100 flex justify-center items-center">
                 <ToastContainer></ToastContainer>
                 <div className="w-3/4 h-5/6 bg-white rounded-lg shadow-lg flex flex-col space-y-2 p-4 overflow-y-auto mb-4">
-                    <span className="text-lg font-semibold">
-                        Produtos de {id}
-                    </span>
+                    <span className="text-lg font-semibold">Produtos de {id}</span>
                     {new Array(5).fill(0).map((_, index) => {
                         return (
                             <div key={index} className="space-y-2">
                                 <div className="flex flex-row items-baseline space-x-2">
                                     <div
                                         role="status"
-                                        className="flex h-8 w-36 animate-pulse rounded-md bg-gray-200"
-                                    ></div>
+                                        className="flex h-8 w-36 animate-pulse rounded-md bg-gray-200"></div>
                                     <div
                                         role="status"
-                                        className="flex h-5 w-24 animate-pulse rounded-md bg-gray-200"
-                                    ></div>
+                                        className="flex h-5 w-24 animate-pulse rounded-md bg-gray-200"></div>
                                 </div>
                                 <div
                                     role="status"
-                                    className="flex h-5 w-full animate-pulse rounded-md bg-gray-200"
-                                ></div>
+                                    className="flex h-5 w-full animate-pulse rounded-md bg-gray-200"></div>
                                 <div
                                     role="status"
-                                    className="flex h-5 w-full animate-pulse rounded-md bg-gray-200"
-                                ></div>
+                                    className="flex h-5 w-full animate-pulse rounded-md bg-gray-200"></div>
                                 <div className="flex flex-row items-baseline justify-between">
                                     <div
                                         role="status"
-                                        className="flex h-5 w-14 animate-pulse rounded-md bg-gray-200"
-                                    ></div>
+                                        className="flex h-5 w-14 animate-pulse rounded-md bg-gray-200"></div>
                                     <div
                                         role="status"
-                                        className="flex h-5 w-24 animate-pulse rounded-md bg-gray-200"
-                                    ></div>
+                                        className="flex h-5 w-24 animate-pulse rounded-md bg-gray-200"></div>
                                 </div>
                             </div>
                         );
@@ -97,6 +87,8 @@ export default function MeusProdutos() {
             }
 
             setData(data.filter((product) => product.id != productId));
+
+            toast.success("Produto removido!");
         } catch (e) {
             toast.error("Algo deu errado :/");
         }
@@ -110,22 +102,18 @@ export default function MeusProdutos() {
                 {data.map((produto) => {
                     return (
                         <div
-                            onClick={() => navigate(`/produto/${produto.id}`)}
                             key={produto.id}
-                            className="cursor-pointer border border-gray-300 rounded-md p-2 hover:bg-gray-100 flex flex-row justify-between"
-                        >
-                            <div className="flex-grow">
-                                <div className="flex flex-row items-baseline space-x-2">
-                                    <span className="text-2xl font-semibold">
-                                        {produto.nome}
-                                    </span>
+                            className="cursor-pointer border border-gray-300 rounded-md p-2 hover:bg-gray-100 flex flex-row justify-between">
+                            <div
+                                onClick={() => navigate(`/produto/${produto.id}`)}
+                                className="flex-grow">
+                                <div className="flex flex-row items-baseline space-x-2 cursor-pointer">
+                                    <span className="text-2xl font-semibold">{produto.nome}</span>
                                     <span className="text-base text-gray-400">
                                         vendido por: {produto.dono}
                                     </span>
                                 </div>
-                                <span className="text-gray-600 text-base">
-                                    {produto.descricao}
-                                </span>
+                                <span className="text-gray-600 text-base">{produto.descricao}</span>
                                 <div className="flex flex-row items-baseline justify-between">
                                     <span className="text-lg font-semibold">
                                         R$ {produto.valor}
@@ -138,8 +126,7 @@ export default function MeusProdutos() {
                             <button
                                 onClick={() => handleRemoveProduct(produto.id)}
                                 type="button"
-                                className="bg-red-500 rounded-md p-2 flex-initial text-white ml-6 hover:bg-red-600"
-                            >
+                                className="bg-red-500 rounded-md p-2 flex-initial text-white ml-6 hover:bg-red-600">
                                 Deletar Produto
                             </button>
                         </div>

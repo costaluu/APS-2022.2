@@ -34,7 +34,7 @@ export default function PublicarItem() {
                 toast.error("Algo deu errado :/");
             }
         } catch (error) {
-            console.log(error)
+            console.log(error);
             toast.error("Verifique os campos.");
         }
     };
@@ -50,8 +50,7 @@ export default function PublicarItem() {
                         ref={emailRef as any}
                         type="text"
                         className="px-2 py-1 w-full border border-gray-300 text-gray-800 rounded-md outline-none"
-                        placeholder="Email"
-                    ></input>
+                        placeholder="Login"></input>
                 </div>
                 <span className="text-gray-900">Produto</span>
 
@@ -59,31 +58,26 @@ export default function PublicarItem() {
                     ref={nameRef as any}
                     type="text"
                     className="px-2 py-1 w-full border border-gray-300 text-gray-800 rounded-md outline-none"
-                    placeholder="Nome"
-                ></input>
+                    placeholder="Nome"></input>
                 <input
                     ref={descriptionRef as any}
                     type="text"
                     className="px-2 py-1 w-full border border-gray-300 text-gray-800 rounded-md outline-none"
-                    placeholder="Descrição"
-                ></input>
+                    placeholder="Descrição"></input>
                 <input
                     ref={priceRef as any}
                     type="text"
                     className="px-2 py-1 w-full border border-gray-300 text-gray-800 rounded-md outline-none"
-                    placeholder="Preço"
-                ></input>
+                    placeholder="Preço"></input>
                 <input
                     ref={totalRef as any}
                     type="text"
                     className="px-2 py-1 w-full border border-gray-300 text-gray-800 rounded-md outline-none"
-                    placeholder="Total de unidades"
-                ></input>
+                    placeholder="Total de unidades"></input>
                 <button
                     onClick={() => handleSubmit()}
                     type="button"
-                    className="px-2 py-1 w-full bg-teal-400 rounded-md text-white"
-                >
+                    className="px-2 py-1 w-full bg-teal-400 rounded-md text-white">
                     Publicar
                 </button>
             </div>

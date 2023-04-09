@@ -23,27 +23,22 @@ export default function PageProduto() {
 
     const emailRef = useRef();
     const quantityRef = useRef();
-    const { data, error } = useFetch<Produto>(
-        `http://localhost:8080/produto/${id}?quantidade=1`
-    );
+    const { data, error } = useFetch<Produto>(`http://localhost:8080/produto/${id}?quantidade=1`);
 
     const handleAddToCart = async () => {
         const schema = z.object({
             login: z.string().min(1),
-            quantidade: z.number()
+            quantidade: z.number(),
         });
 
         const form = useForm(
             schema,
             async (parsedData) => {
                 try {
-                    const res = await axios.post(
-                        "http://localhost:8080/carrinho/adicionar",
-                        {
-                            idProduto: id!,
-                            ...parsedData,
-                        }
-                    );
+                    const res = await axios.post("http://localhost:8080/carrinho/adicionar", {
+                        idProduto: id!,
+                        ...parsedData,
+                    });
 
                     if (res.status !== 200) toast.error("Algo deu errado :/");
                     else toast.success("Produto adicionado ao carrinho!");
@@ -73,52 +68,38 @@ export default function PageProduto() {
                         <div className="flex flex-row items-baseline space-x-2">
                             <div
                                 role="status"
-                                className="flex h-8 w-36 animate-pulse rounded-md bg-gray-200"
-                            ></div>
+                                className="flex h-8 w-36 animate-pulse rounded-md bg-gray-200"></div>
                             <div
                                 role="status"
-                                className="flex h-5 w-24 animate-pulse rounded-md bg-gray-200"
-                            ></div>
+                                className="flex h-5 w-24 animate-pulse rounded-md bg-gray-200"></div>
                         </div>
                         <div
                             role="status"
-                            className="flex h-5 w-full animate-pulse rounded-md bg-gray-200"
-                        ></div>
+                            className="flex h-5 w-full animate-pulse rounded-md bg-gray-200"></div>
                         <div
                             role="status"
-                            className="flex h-5 w-full animate-pulse rounded-md bg-gray-200"
-                        ></div>
+                            className="flex h-5 w-full animate-pulse rounded-md bg-gray-200"></div>
                         <div className="flex flex-row items-baseline justify-between">
                             <div
                                 role="status"
-                                className="flex h-5 w-14 animate-pulse rounded-md bg-gray-200"
-                            ></div>
+                                className="flex h-5 w-14 animate-pulse rounded-md bg-gray-200"></div>
                             <div
                                 role="status"
-                                className="flex h-5 w-24 animate-pulse rounded-md bg-gray-200"
-                            ></div>
+                                className="flex h-5 w-24 animate-pulse rounded-md bg-gray-200"></div>
                         </div>
                     </>
                 ) : (
                     <>
                         <div className="flex flex-row items-baseline space-x-2">
-                            <span className="text-2xl font-semibold">
-                                {data.nome}
-                            </span>
+                            <span className="text-2xl font-semibold">{data.nome}</span>
                             <span className="text-base text-gray-400">
                                 vendido por: {data.dono}
                             </span>
                         </div>
-                        <span className="text-gray-600 text-base">
-                            {data.descricao}
-                        </span>
+                        <span className="text-gray-600 text-base">{data.descricao}</span>
                         <div className="flex flex-row items-baseline justify-between">
-                            <span className="text-lg font-semibold">
-                                R$ {data.valor}
-                            </span>
-                            <span className="text-base">
-                                Quantidade: {data.totalUnidades}
-                            </span>
+                            <span className="text-lg font-semibold">R$ {data.valor}</span>
+                            <span className="text-base">Quantidade: {data.totalUnidades}</span>
                         </div>
                     </>
                 )}
@@ -129,8 +110,7 @@ export default function PageProduto() {
                         ref={emailRef as any}
                         type="text"
                         className="px-2 py-1 w-full border border-gray-300 text-gray-800 rounded-md outline-none"
-                        placeholder="Email"
-                    ></input>
+                        placeholder="Login"></input>
                 </div>
                 <div className="w-full flex flex-row space-x-2 items-center">
                     <span className="text-gray-600 text-base">Quantidade</span>
@@ -138,14 +118,12 @@ export default function PageProduto() {
                         ref={quantityRef as any}
                         type="text"
                         className="px-2 py-1 w-full border border-gray-300 text-gray-800 rounded-md outline-none"
-                        placeholder="Quantidade"
-                    ></input>
+                        placeholder="Quantidade"></input>
                 </div>
                 <button
                     onClick={() => handleAddToCart()}
                     type="button"
-                    className="px-2 py-1 w-full bg-teal-400 rounded-md text-white"
-                >
+                    className="px-2 py-1 w-full bg-teal-400 rounded-md text-white">
                     Adicionar ao carrinho
                 </button>
             </div>
