@@ -16,7 +16,8 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: Postgres2023!
       POSTGRES_DB: ecommerce
-
+    volumes:
+      - postgres-db-vol:/var/lib/postgresql/data
   gateway:
     container_name: api-gateway
     build: 
@@ -60,3 +61,6 @@ services:
     depends_on:
       - discovery-server
       - postgres-db
+
+volumes:
+  postgres-db-vol:
