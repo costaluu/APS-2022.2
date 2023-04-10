@@ -7,6 +7,10 @@ Costa - jlcs3
 Jonathan - jkss
 ```
 
+## Apresentações
+
+**SOA**: https://docs.google.com/presentation/d/1kzoT4_xYsk3v77pDi594pU5Yfk6BKGEc-saNCi3AHdk/edit#slide=id.g1dd8eb9a3b8_7_75
+
 ## Escopo
 
 O grupo se propõe a modelar uma aplicação de vendas online (E-Commerce) de propósito geral. Nessa aplicação, serão expostos produtos em geral que clientes queiram vender e possivelmente comprar, os clientes poderão se registrar e logar sendo usuários, adicionar produtos em seus carrinhos, efetuar a compra dos produtos no carrinho utilizando um agente externo, nesse caso, cartão de crédito.
