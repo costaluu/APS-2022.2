@@ -18,6 +18,7 @@ services:
       POSTGRES_DB: ecommerce
     volumes:
       - postgres-db-vol:/var/lib/postgresql/data
+
   gateway:
     container_name: api-gateway
     build: 
@@ -28,6 +29,13 @@ services:
       EUREKA_SERVER_URL: http://discovery-server:8761/eureka/
     depends_on:
       - discovery-server
+
+  frontend:
+    container_name: frontend
+    build: 
+      context: ./frontend
+    ports:
+      - "8082:8080"
 
   conta:
     container_name: conta
